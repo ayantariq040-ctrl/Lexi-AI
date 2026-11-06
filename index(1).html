@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0b0305"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050203">
+<script>/* LEXI SETTINGS: public karne par worker ka link yahan ' ' ke andar likho, jaise window.LEXI_SERVER='https://lexi.naam.workers.dev'; */window.LEXI_SERVER='https://lexi.ayantariq040.workers.dev';</script>
+<script>
+if(!Element.prototype.replaceChildren){Element.prototype.replaceChildren=function(){while(this.firstChild)this.removeChild(this.firstChild);for(var i=0;i<arguments.length;i++){var x=arguments[i];this.appendChild(typeof x==='string'?document.createTextNode(x):x)}}}
+if(window.HTMLFormElement&&!HTMLFormElement.prototype.requestSubmit){HTMLFormElement.prototype.requestSubmit=function(){var e=document.createEvent('Event');e.initEvent('submit',true,true);if(this.dispatchEvent(e))this.submit()}}
+window.addEventListener('error',function(e){try{if(document.getElementById('fatal')||!document.body)return;var d=document.createElement('div');d.id='fatal';d.style.cssText='position:fixed;left:10px;right:10px;top:10px;z-index:99999;background:#3a0008;color:#fff;border:1px solid #ff3b4a;padding:12px;border-radius:12px;font:14px/1.5 system-ui,sans-serif';d.textContent='Lexi ko chalne mein masla aaya ('+(e.message||'error')+'). Chrome ko update karo, ya Chrome mein link kholo, ya WhatsApp/Instagram ke andar se nahi.';document.body.appendChild(d)}catch(x){}});
+</script>
+<title>Lexi AI</title>
+<meta name="description" content="Lexi - personal AI assistant">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+<style>
+:root{--bg:#050203;--glass:rgba(14,4,6,.86);--p2:#14070a;--line:rgba(255,40,50,.2);--tx:#f6e9ea;--mu:#a67b80;--ac:#ff1f2d;--user:#2a0508;--code:#0a0304;--grad:linear-gradient(135deg,#a80018,#e0102a 50%,#ff3b3b)}
+[data-theme=light]{--bg:#fff4f4;--glass:rgba(255,255,255,.9);--p2:#fff;--line:rgba(150,0,20,.2);--tx:#2a0508;--mu:#8a4a50;--user:#ffdede;--code:#fdeaea}
+*{box-sizing:border-box;margin:0}html,body{height:100%}
+body{background:var(--bg);color:var(--tx);font:15px/1.65 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+body:before{content:"";position:fixed;top:0;right:0;bottom:0;left:0;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 800' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='rgb%28255%2C40%2C50%29' stroke-opacity='.13' stroke-width='1'%3E%3Cellipse cx='200' cy='330' rx='190' ry='70' transform='rotate%28-25 200 330%29'/%3E%3Cellipse cx='200' cy='330' rx='170' ry='95' transform='rotate%2835 200 330%29'/%3E%3Ccircle cx='200' cy='330' r='150' stroke-dasharray='2 8'/%3E%3Ccircle cx='200' cy='330' r='215' stroke-dasharray='40 14 6 14'/%3E%3Ccircle cx='200' cy='330' r='260'/%3E%3Cpath d='M200 330L200 40M200 330L460 180M200 330L-60 180M200 330L460 480M200 330L-60 480M200 330L200 620' stroke-dasharray='3 9'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat,radial-gradient(60% 45% at 85% -10%,rgba(255,31,45,.2),transparent),radial-gradient(45% 40% at 0 100%,rgba(160,0,20,.13),transparent)}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+.app{position:relative;display:flex;height:100vh;height:100dvh}
+aside{width:290px;flex:none;display:flex;flex-direction:column;gap:12px;padding:14px;padding-top:max(14px,env(safe-area-inset-top));background:var(--glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-right:1px solid var(--line);z-index:30;transition:transform .28s}
+.brand{display:flex;align-items:center;gap:10px;font-size:18px;padding:4px 4px 2px}
+.orb{width:30px;height:30px;border-radius:50%;background:var(--grad);box-shadow:0 0 22px rgba(255,31,45,.55);flex:none}
+.tag{font-size:10px;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:99px;background:var(--grad);color:#fff}
+.newc{padding:11px;border-radius:13px;background:var(--grad);color:#fff;font-weight:600;box-shadow:0 8px 24px rgba(255,31,45,.3)}
+.search,.fld{width:100%;padding:10px 13px;border-radius:12px;background:var(--p2);border:1px solid var(--line);outline:0}
+.search:focus,.fld:focus{border-color:var(--ac)}
+.list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:3px;min-height:0}
+.ci{display:flex;align-items:center;gap:4px;padding:9px 10px;border-radius:11px;cursor:pointer;color:var(--mu);font-size:14px}
+.ci:hover,.ci.on{background:var(--p2);color:var(--tx)}.ci span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ci button{opacity:.55;padding:2px 5px;font-size:13px;color:inherit}.ci button:hover{opacity:1}
+.foot{display:flex;flex-direction:column;gap:8px;padding-bottom:env(safe-area-inset-bottom)}.foot small{color:var(--mu);font-size:11px;line-height:1.5}
+.sbtn{padding:10px 12px;border-radius:12px;background:var(--p2);border:1px solid var(--line);text-align:left}
+.shade{display:none}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;position:relative}
+header{display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top));border-bottom:1px solid var(--line)}
+.ttl{font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip{font-size:11px;color:var(--mu);padding:4px 10px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}
+.chip:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;margin-right:6px}.chip.off:before{background:#f87171}
+.ib{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:17px}.ib:hover{background:var(--p2)}
+#menu{display:none}
+.scroll{flex:1;overflow-y:auto;overscroll-behavior:contain}.wrap{max-width:780px;margin:0 auto;padding:18px 16px 8px}
+#welcome{text-align:center;padding:7vh 0 10px}
+#welcome .orb{width:72px;height:72px;margin:0 auto 18px;animation:glow 3.5s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 46px rgba(160,0,20,.8);transform:scale(1.05)}}
+h1{font-size:28px;line-height:1.25;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#welcome p{color:var(--mu);margin:10px auto 26px;max-width:480px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}
+.card{padding:14px;border-radius:16px;background:var(--p2);border:1px solid var(--line);transition:.2s}
+.card:hover{transform:translateY(-2px);border-color:var(--ac)}.card b{display:block;font-size:14px}.card span{color:var(--mu);font-size:12.5px}
+.msg{display:flex;gap:12px;margin:22px 0}.msg.user{justify-content:flex-end}
+.bub{background:var(--user);border:1px solid var(--line);padding:10px 15px;border-radius:18px 18px 4px 18px;max-width:86%;white-space:pre-wrap;overflow-wrap:anywhere}
+.av{width:30px;height:30px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:14px;flex:none;margin-top:2px}
+.body{flex:1;min-width:0}.txt{overflow-wrap:anywhere}.txt>*:first-child{margin-top:0}
+.txt p{margin:8px 0}.txt h2,.txt h3,.txt h4,.txt h5{margin:18px 0 6px;line-height:1.3}.txt h2{font-size:21px}.txt h3{font-size:18px}.txt h4,.txt h5{font-size:16px}
+.txt ul,.txt ol{margin:8px 0;padding-left:22px}.txt li{margin:3px 0}.txt a{color:var(--ac)}
+.txt blockquote{border-left:3px solid var(--ac);padding:2px 12px;color:var(--mu);margin:8px 0}.txt hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.txt code{font:13px ui-monospace,Menlo,Consolas,monospace;background:var(--code);padding:2px 6px;border-radius:6px;border:1px solid var(--line)}
+.code{margin:12px 0;border-radius:14px;background:var(--code);border:1px solid var(--line);overflow:hidden}
+.ch{display:flex;justify-content:space-between;align-items:center;padding:6px 8px 6px 14px;font-size:12px;color:var(--mu);border-bottom:1px solid var(--line)}
+.ch button{padding:4px 10px;border-radius:8px;color:var(--mu);font-size:12px}.ch button:hover{background:var(--p2);color:var(--tx)}
+.code pre{overflow-x:auto;padding:12px 14px}.code code{background:none;border:0;padding:0;white-space:pre}
+.acts{display:flex;gap:4px;margin-top:6px}.ab{font-size:12px;color:var(--mu);padding:4px 9px;border-radius:8px}.ab:hover{background:var(--p2);color:var(--tx)}
+.err{margin-top:8px;padding:10px 13px;border-radius:12px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35);font-size:14px}
+.dots{display:flex;gap:5px;padding:10px 0}.dots i{width:7px;height:7px;border-radius:50%;background:var(--ac);animation:b 1.2s infinite}.dots i:nth-child(2){animation-delay:.2s}.dots i:nth-child(3){animation-delay:.4s}
+@keyframes b{0%,60%,100%{opacity:.25;transform:none}30%{opacity:1;transform:translateY(-4px)}}
+.cw{padding:6px 14px max(12px,env(safe-area-inset-bottom))}
+.box{max-width:780px;margin:0 auto;display:flex;align-items:flex-end;gap:4px;padding:7px;border-radius:24px;background:var(--p2);border:1px solid var(--line);box-shadow:0 10px 40px rgba(0,0,0,.25);transition:.2s}
+.box:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px rgba(255,31,45,.18),0 10px 40px rgba(0,0,0,.25)}
+#p{flex:1;min-width:0;border:0;background:none;outline:0;resize:none;max-height:170px;padding:8px 8px;line-height:1.5}
+.send{width:40px;height:40px;border-radius:50%;background:var(--grad);color:#fff;font-size:18px;flex:none}.send.stop{background:#f87171}
+.note{text-align:center;color:var(--mu);font-size:11px;margin-top:7px}
+.modal{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;place-items:center;z-index:50;padding:16px}.modal.show{display:grid}
+.mc{width:min(460px,100%);max-height:92vh;max-height:92dvh;overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:9px}
+.mc label{font-size:13px;color:var(--mu);margin-top:6px}.mc small{color:var(--mu);font-size:11.5px;line-height:1.5}.row{display:flex;gap:8px}.row>*{flex:1}
+.mc .chk{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--tx)}
+.btn{padding:10px 14px;border-radius:12px;background:var(--p2);border:1px solid var(--line)}.btn.pri{background:var(--grad);color:#fff;border:0;font-weight:600}
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:var(--p2);border:1px solid var(--line);padding:9px 16px;border-radius:99px;font-size:13px;display:none;z-index:60}
+@media(max-width:860px){aside{position:fixed;top:0;right:auto;bottom:0;left:0;inset:0 auto 0 0;width:min(310px,86vw);transform:translateX(-102%)}aside.open{transform:none;box-shadow:12px 0 50px rgba(0,0,0,.5)}
+.shade.show{display:block;position:fixed;top:0;right:0;bottom:0;left:0;inset:0;background:rgba(0,0,0,.5);z-index:20}#menu{display:grid}.cards{grid-template-columns:1fr}h1{font-size:24px}}
+#pv{max-width:780px;margin:0 auto 6px}#pv:empty{display:none}.pvi{position:relative;display:inline-block}#pv img{height:64px;border-radius:12px;border:1px solid var(--line)}#pv button{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#f87171;color:#fff;font-size:11px}.th{display:block;max-width:220px;max-height:220px;border-radius:12px;margin-bottom:8px}
+.fch{display:inline-block;padding:8px 12px;border-radius:12px;background:var(--p2);border:1px solid var(--line);font-size:13px;margin-bottom:8px;max-width:100%;overflow:hidden;text-overflow:ellipsis}#pv .th,#pv .fch{margin:0}
+.tc{color:#6b7392;font-style:italic}.ts{color:#7ee0a5}.tn{color:#f2a96b}.tk{color:#ff7a7a}
+[data-theme=light] .ts{color:#0f8a4f}[data-theme=light] .tn{color:#c2570c}[data-theme=light] .tk{color:#b00020}
+.tw{overflow-x:auto;margin:10px 0;border-radius:12px;border:1px solid var(--line)}.tw table{border-collapse:collapse;font-size:14px;min-width:100%}.tw th,.tw td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line)}.tw th{background:var(--p2);white-space:nowrap}.tw tr:last-child td{border-bottom:0}
+.dn{position:absolute;right:18px;bottom:118px;width:40px;height:40px;border-radius:50%;background:var(--p2);border:1px solid var(--line);box-shadow:0 6px 20px rgba(0,0,0,.3);display:none;z-index:5}
+.ed{opacity:.45;align-self:center;font-size:13px;padding:4px 7px;border-radius:8px;color:var(--mu)}.ed:hover{opacity:1;background:var(--p2)}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+#tb{max-width:780px;margin:0 auto 8px;display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none}.eff{display:flex;gap:2px;padding:3px;border-radius:99px;background:var(--p2);border:1px solid var(--line);flex:none}.eff button{padding:5px 11px;border-radius:99px;font-size:12px;color:var(--mu);white-space:nowrap}.eff button.on{background:var(--grad);color:#fff}#mode2{padding:6px 10px;border-radius:99px;background:var(--p2);border:1px solid var(--line);font-size:12px;flex:none;outline:0}
+.mc>*{flex-shrink:0}.mc textarea.fld{min-height:150px;resize:vertical}.row.sticky{position:sticky;bottom:-20px;padding:12px 0;margin-top:10px;background:var(--bg);z-index:2;border-top:1px solid var(--line)}.chip{max-width:40vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ttl{min-width:56px}.eff button{padding:5px 8px;font-size:11.5px}#mode2{padding:6px 8px;font-size:11.5px}
+.cb{display:flex;gap:2px}.out{border-top:1px solid var(--line);padding:10px 14px;font:13px ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;max-height:320px;overflow:auto}.out iframe{display:block;width:100%;height:280px;border:0;background:#fff;border-radius:8px}
+.box2{max-width:780px;margin:0 auto;background:var(--p2);border:1px solid var(--line);border-radius:26px;padding:12px 12px 10px;box-shadow:0 10px 40px rgba(0,0,0,.25);transition:.2s}
+.box2:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px rgba(255,31,45,.18),0 10px 40px rgba(0,0,0,.25)}
+.box2 #p{display:block;width:100%;padding:4px 6px 12px;font-size:16px}
+.bar{display:flex;align-items:center;gap:8px}.sp{flex:1}
+.rb{width:42px;height:42px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-size:20px;flex:none}
+.pill{height:42px;padding:0 16px;border-radius:99px;background:var(--bg);border:1px solid var(--line);font-size:14px;max-width:56vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.box2 .send{width:42px;height:42px}
+.pop{position:fixed;min-width:250px;max-width:calc(100vw - 20px);max-height:62vh;max-height:62dvh;overflow-y:auto;background:var(--p2);border:1px solid var(--line);border-radius:20px;padding:8px;box-shadow:0 16px 50px rgba(0,0,0,.5);display:none;z-index:40}.pop.show{display:block}
+.pi{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:12px;text-align:left;font-size:15px}.pi:hover{background:var(--bg)}.pi i{font-style:normal;width:24px;text-align:center;font-size:18px;flex:none}.pi small{display:block;color:var(--mu);font-size:12px}.pi .ck{margin-left:auto;color:var(--ac)}
+.ph{font-size:11px;letter-spacing:.06em;color:var(--mu);padding:10px 12px 4px;text-transform:uppercase}
+.dn{bottom:170px}
+#orb{display:block;margin:0 auto 6px;max-width:100%}
+.sys{font:600 11px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.22em;color:#ff3b3b;margin-bottom:12px;text-shadow:0 0 12px rgba(255,31,45,.7)}
+h1{font-size:24px;letter-spacing:.07em;text-transform:uppercase;filter:drop-shadow(0 0 14px rgba(255,31,45,.5))}
+.brand b{letter-spacing:.2em;text-transform:uppercase}.ttl{letter-spacing:.05em}
+.chip,.pill,.ph{font-family:ui-monospace,Menlo,Consolas,monospace}
+.card{position:relative;border-radius:8px}
+.card:before,.card:after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--ac);pointer-events:none}
+.card:before{top:-1px;left:-1px;border-right:0;border-bottom:0;border-radius:8px 0 0 0}.card:after{right:-1px;bottom:-1px;border-left:0;border-top:0;border-radius:0 0 8px 0}
+.card:hover{box-shadow:0 0 22px rgba(255,31,45,.28)}
+.box2{border-radius:20px}.box2:focus-within{box-shadow:0 0 0 1px var(--ac),0 0 26px rgba(255,31,45,.35)}
+.send{box-shadow:0 0 18px rgba(255,31,45,.55)}.av{box-shadow:0 0 14px rgba(255,31,45,.6)}.orb{box-shadow:0 0 22px rgba(255,31,45,.7)}
+
+#orb{display:block;margin:0 auto;max-width:100%}
+header,.scroll,.cw{position:relative;z-index:1}
+#welcome{padding:0 0 10px}
+.cards{display:none}
+.mc details{border:1px solid var(--line);border-radius:12px;padding:8px 12px}.mc summary{cursor:pointer;color:var(--mu);padding:4px 0;font-size:14px}.mc details[open] summary{margin-bottom:6px}.mc details label{display:block}
+@media(max-width:860px){aside{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}}
+.toast{bottom:170px}
+h1{font-size:21px;letter-spacing:.05em}
+#hero{transform-origin:top center;will-change:transform,opacity}.scroll{overflow-anchor:none}
+.txt ul,.txt ol{padding-left:0}.txt li{list-style-position:inside}
+#welcome{padding-top:44px}.sys,.sys2,#welcome h1,#welcome p{position:relative;z-index:2}#orbw{position:relative;width:fit-content;margin:0 auto}#orbh{position:absolute;pointer-events:none}#orb{display:block}
+.scroll{overflow-x:hidden}
+.sys2{font:500 10px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.14em;color:var(--mu);margin:-6px 0 10px;opacity:.85}
+header:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:5px;background:repeating-linear-gradient(90deg,rgba(255,60,70,.55) 0 1px,transparent 1px 8px);opacity:.35;pointer-events:none}
+.av,.brand .orb{position:relative}
+.av:after,.brand .orb:after{content:"";position:absolute;top:-5px;right:-5px;bottom:-5px;left:-5px;inset:-5px;border-radius:50%;border:1px dashed rgba(255,70,80,.7);animation:spin 10s linear infinite;pointer-events:none}
+.busy #msgs .msg:last-of-type .av:after{animation-duration:1.3s;border:2px solid transparent;border-top-color:#ff3b4a;border-bottom-color:#ff3b4a}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+<div class="app">
+<aside id="side">
+<div class="brand"><div class="orb"></div><b>Lexi</b><span class="tag">AI</span></div>
+<button class="newc" id="new">＋ Nayi chat</button>
+<input class="search" id="q" placeholder="Chats dhoondo…">
+<div class="list" id="list"></div>
+<div class="foot"><button class="sbtn" id="openSet">⚙ Settings</button><small>Lexi se ghalti ho sakti hai. Zaroori maloomat khud check karo.</small></div>
+</aside>
+<div class="shade" id="shade"></div>
+<section class="main">
+<header><button class="ib" id="menu" aria-label="Menu">☰</button><div class="ttl" id="ttl">Lexi</div><span class="chip" id="chip"></span><button class="ib" id="exp" style="display:none"></button><button class="ib" id="more" aria-label="Zyada" title="Jaldi actions">⋮</button><button class="ib" id="theme" aria-label="Theme">☾</button></header>
+<div class="scroll" id="scroll"><div class="wrap"><div id="hero"><div id="orbw"><canvas id="orb"></canvas><canvas id="orbh"></canvas></div>
+<div id="welcome"><div class="sys">● LEXI AI · SYSTEM ONLINE</div><div class="sys2" id="sys2"></div><h1>Assalam-o-Alaikum! 👋</h1><p>Main Lexi hoon, tumhari AI assistant. Sawal poochho, coding seekho, ya apna project banwao.</p>
+<div class="cards">
+<button class="card" data-p="Mere liye professional email likho. Mauzu aur tafseel:"><b>✉️ Email / Message</b><span>Professional ya friendly</span></button>
+<button class="card" data-m="debug" data-p="Ye code theek karo aur batao ghalti kya thi:"><b>🐞 Code debug</b><span>Error dhoondo aur fix karo</span></button>
+<button class="card" data-p="Is project ke liye winning freelancing proposal likho. Project ki tafseel:"><b>💼 Freelance proposal</b><span>Client ko impress karo</span></button>
+<button class="card" data-p="Is topic ke asaan notes aur 5 MCQs banao. Topic:"><b>📚 Study notes</b><span>Notes + practice MCQs</span></button>
+<button class="card" data-m="coder" data-p="Mujhe ek complete responsive website ka code do. Website kis cheez ki hai:"><b>🌐 Website banao</b><span>HTML, CSS, JavaScript</span></button>
+<button class="card" data-p="Mere aaj ke din ka realistic plan banao. Mere kaam:"><b>📋 Daily planner</b><span>Time table banao</span></button>
+<button class="card" data-p="Is text ka behtareen translation karo (Urdu/English). Text:"><b>🌍 Translate</b><span>Urdu, Roman Urdu, English</span></button>
+<button class="card" data-p="Mobile se shuru hone wale 5 online earning ideas batao."><b>💡 Earning ideas</b><span>Practical next steps</span></button>
+<button class="card" data-m="tutor" data-p="Mujhe Python bilkul shuru se sikhao, step by step, har lesson ke baad exercises ke sath."><b>🐍 Python seekho</b><span>Beginner se advanced</span></button>
+<button class="card" data-m="tutor" data-p="Mujhe SQL aur database design asaan tareeqe se sikhao, examples ke sath."><b>🗄 SQL / Database</b><span>Queries aur tables</span></button>
+<button class="card" data-m="coder" data-p="Mujhe mobile app banane ka roadmap batao (Flutter ya Android) aur pehla chota project step by step."><b>📱 App banao</b><span>Flutter / Android</span></button>
+<button class="card" data-m="tutor" data-p="Mujhe coding practice ke liye 5 sawal do, easy se hard tak. Pehle sawal se shuru karo."><b>🧠 Coding practice</b><span>Sawal aur hints</span></button>
+<button class="card" data-m="linguist" data-p="Mujhe ye zabaan sikhao, bilkul shuru se step by step (zabaan ka naam likho):"><b>🌐 Zabaan seekho</b><span>Koi bhi zabaan</span></button>
+<button class="card" data-p="Mere liye ek professional PDF document banao. Topic:"><b>📄 PDF banao</b><span>Download ke liye tayyar</span></button>
+<button class="card" data-m="coder" data-p="Ek chhota complete website project alag alag files mein banao taake main ZIP download kar sakun. Website kis cheez ki hai:"><b>📦 Project ZIP</b><span>Files + ZIP download</span></button>
+<button class="card" data-p="Ek 8-scene animated text video script banao jo main video ki tarah download kar sakun. Topic:"><b>🎬 Video banao</b><span>Animated text video</span></button>
+<button class="card" data-m="general" data-p="Meri sehat ka ek sawal hai. Aam maloomat, ehtiyat aur doctor ko kab dikhana hai ye batao. Masla:"><b>🩺 Sehat ke sawal</b><span>Aam maloomat aur ehtiyat</span></button>
+<button class="card" data-m="general" data-p="Mujhe ek asaan aur sehatmand recipe batao. Ghar mein jo cheezein hain:"><b>🍳 Khana / Recipe</b><span>Ghar ki cheezon se</span></button>
+<button class="card" data-m="general" data-p="Meri mahana aamdani aur kharchon ka budget banao aur bachat ke tareeqe batao. Aamdani aur kharche:"><b>💰 Budget aur paisa</b><span>Bachat ka plan</span></button>
+<button class="card" data-m="general" data-p="Mujhe aaj ek dilchasp general knowledge ki baat sikhao aur uske baad 3 sawal poochho."><b>🌍 General Knowledge</b><span>Roz kuch naya</span></button>
+<button class="card" data-m="general" data-p="Mujhe documents ka tareeqa batao, step by step (CNIC, passport, license wagera). Kaun sa document:"><b>🪪 Documents</b><span>CNIC, passport, license</span></button>
+<button class="card" data-m="general" data-p="Main thora pareshan hoon. Mujhse baat karo aur sukoon ke asaan tareeqe batao. Masla:"><b>🧘 Zehni sukoon</b><span>Stress aur pareshani</span></button>
+</div></div>
+</div><div id="msgs"></div></div></div>
+<div class="cw"><div id="pv"></div><div id="tb" style="display:none"><div class="eff" id="eff"><button type="button" data-e="low">⚡ Low</button><button type="button" data-e="medium">Medium</button><button type="button" data-e="high">High</button><button type="button" data-e="extreme">🔥 Extreme</button></div><select id="mode2" aria-label="Mode"><option value="general">General</option><option value="coder">Coder</option><option value="teacher">Teacher</option><option value="writer">Writer</option><option value="business">Business</option><option value="tutor">Coding Teacher</option><option value="debug">Debugger</option><option value="reviewer">Code Reviewer</option><option value="architect">Architect</option><option value="linguist">Language Teacher</option><option value="translator">Translator</option></select></div><form class="box2" id="f"><textarea id="p" dir="auto" rows="1" placeholder="Lexi ko likho ya mic dabao…"></textarea><input type="file" id="file" accept="image/*,application/pdf,.txt,.md,.csv,.json,.html,.css,.js,.py,.xml,.log" hidden><div class="bar"><button type="button" class="rb" id="plus" aria-label="Menu">＋</button><button type="button" class="pill" id="pill"><span id="pt">Medium</span> ▾</button><span class="sp"></span><button type="button" class="rb" id="mic" aria-label="Voice">🎙</button><button class="send" id="send" aria-label="Send">↑</button></div></form><div class="note">Lexi AI</div></div><div class="pop" id="popMore"></div><div class="pop" id="popPlus"></div><div class="pop" id="popPill"></div><button class="dn" id="dn" aria-label="Neeche">↓</button>
+</section>
+</div>
+<div class="modal" id="modal"><div class="mc">
+<h3>Lexi Setup</h3><small>Lexi bina key ke Puter ke free AI se chalti hai (pehli dafa Puter ka login popup aata hai). Apni key (Groq ya Claude) ho to neeche paste karo.</small>
+<label for="key">API key (sirf ek baar)</label><input class="fld" id="key" type="password" autocomplete="off" placeholder="Yahan key paste karo (gsk_… ya sk-ant-…)">
+<button class="btn" id="psign" type="button" style="display:none">🔑 Puter se login karo</button><small id="kinfo">Key daalte hi Lexi khud pehchan leti hai ke ye Groq, Claude ya OpenRouter ki hai.</small>
+<details id="adv"><summary>⚙ Advanced: provider aur model</summary>
+<label for="prov">AI Provider</label><select class="fld" id="prov"><option value="puter">Puter (free, bina key)</option><option value="claude">Claude (Anthropic)</option><option value="openai">Groq / OpenRouter / OpenAI</option></select>
+<div id="bw" hidden><label for="base">Base URL</label><input class="fld" id="base" list="bl" autocomplete="off"><datalist id="bl"><option value="https://api.groq.com/openai/v1"><option value="https://openrouter.ai/api/v1"><option value="https://api.openai.com/v1"></datalist></div>
+<label for="model">Model</label><div class="row"><input class="fld" id="model" list="ml" autocomplete="off"><button class="btn" type="button" id="lm">Models load karo</button></div><datalist id="ml"></datalist><select class="fld" id="msel" hidden></select>
+<label class="chk"><input type="checkbox" id="rem" checked> Is device par key yaad rakho</label><small>Key sirf tumhare browser se seedha provider ko jati hai.</small>
+</details>
+<details><summary>Zyada options: mode, mere baare mein, lambai</summary><label for="lang">Lexi ki zabaan aur mic ki zabaan</label><select class="fld" id="lang"><option value="auto">Auto (jo zabaan tum likho)</option><option value="roman">Roman Urdu</option><option value="ur">اردو</option><option value="en">English</option><option value="ar">العربية</option><option value="hi">हिन्दी</option><option value="fa">فارسی</option><option value="tr">Türkçe</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="zh">中文</option></select><label for="voice">Lexi ki awaz (accent)</label><select class="fld" id="voice"></select><button class="btn" type="button" id="vtest">🔊 Awaz test karo</button>
+<label for="mode">Lexi ka mode</label><select class="fld" id="mode"><option value="general">General (sab kuch)</option><option value="coder">Coder</option><option value="teacher">Teacher</option><option value="writer">Writer</option><option value="business">Freelancing / Business</option><option value="tutor">Coding Teacher</option><option value="debug">Debugger</option><option value="reviewer">Code Reviewer</option><option value="architect">Architect</option><option value="linguist">Language Teacher</option><option value="translator">Translator</option></select>
+<label for="me">Mere baare mein (Lexi har chat mein yaad rakhegi)</label><textarea class="fld" id="me" rows="7" placeholder="Apna kaam, skills, projects, goals aur Lexi se kaise baat karni hai — yahan likho."></textarea>
+<button class="btn" type="button" id="tpl">📝 Template daalo</button><small>Chat mein "yaad rakho: ..." likho to Lexi khud yahan add kar degi.</small>
+<label class="chk"><input type="checkbox" id="web"> Internet search (sirf Claude mein)</label>
+<label for="tok">Jawab ki max lambai</label><select class="fld" id="tok"><option value="0">Unlimited (model ka max)</option><option value="2048">Chhoti (2048)</option><option value="4096">Medium (4096)</option><option value="8192">Lambi (8192)</option><option value="16384">Bohat lambi (16384)</option></select>
+<label for="temp">Jawab ka andaz</label><select class="fld" id="temp"><option value="0.3">Precise (kam creative)</option><option value="0.7">Balanced</option><option value="1">Creative</option></select></details>
+<div class="row sticky"><button class="btn" id="rk" type="button">Key hatao</button><button class="btn pri" id="sv" type="button">Save</button></div>
+<button class="btn" id="ca" type="button">🗑 Sab chats delete karo</button>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const BASE='You are Lexi, a warm, sharp, highly capable female AI assistant with a friendly, confident personality. Always refer to yourself in the feminine form in Roman Urdu (main kar sakti hoon, main bata sakti hoon, main samajh gayi), address the user respectfully as aap, and never assume the user gender. You are an expert programmer in every major language (Python, JavaScript/TypeScript, HTML/CSS, Java, Kotlin, C, C++, C#, PHP, SQL, Dart/Flutter, Go, Rust, Bash, Git) and frameworks (React, Node, Django, Flask, FastAPI, Android), plus debugging, architecture, algorithms and data structures, and phone-based workflows (Acode, Spck, Termux, Pydroid), teaching and explaining, writing and editing, translation, business and freelancing, study help, math and problem solving, planning and research. Reply in simple Roman Urdu by default (when the user writes Roman Urdu, mixes languages or it is unclear), but always follow the LANGUAGES rule. Think step by step on hard problems, answer directly first, then explain clearly. Ask at most one clarifying question and only when truly needed. Be honest: if unsure, say so, and never claim to have done actions you did not do. Double-check facts, calculations and code before answering, and state assumptions briefly. Match answer length to the question. Use Markdown (tables for comparisons) with short headings, lists and fenced code blocks with a language label. For code give complete working code, say which file it goes in, and mention edge cases. When teaching, use simple examples and analogies. When the user shares an image, PDF or text file, analyse it carefully. If code execution is available, use it for exact math and data work.';
+const MODES={general:'',coder:'MODE: Senior software engineer in any language. Ask which language only if unclear. Give complete runnable code with clean structure, error handling and security, explain briefly, and say how to run it on a phone when relevant.',teacher:'MODE: Patient teacher. Explain from the basics with small examples, then end with a short 2-3 question quiz.',writer:'MODE: Professional writer and editor. Produce polished, ready-to-use text in the requested tone and offer one improved alternative.',business:'MODE: Freelancing and business coach. Give practical, realistic step-by-step plans, templates, pricing and client-communication advice.',tutor:'MODE: Coding teacher for beginners in any language. Teach step by step: explain the concept in simple Roman Urdu, show a tiny runnable example, then give 2-3 exercises of increasing difficulty with hints, and let the user try before revealing full solutions. Keep a clear roadmap.',reviewer:'MODE: Code reviewer. Review the code for bugs, security issues, performance and readability. List issues by severity (high, medium, low) with a short reason and fix for each, then give the improved code.',architect:'MODE: Software architect. Help plan the project: requirements, tech stack, folder structure, database schema, API endpoints and milestones. Keep it practical for a solo developer on a phone, then offer to generate the files.',debug:'MODE: Debugger. If the exact error message or code is missing, ask for it. Find the root cause, show the fixed code, and explain what went wrong and how to avoid it next time.',linguist:'MODE: Language teacher. If the target language or level is unclear, ask once. Teach in short lessons: vocabulary with Roman pronunciation, a grammar tip, example sentences with translations, then a mini quiz; correct mistakes kindly and keep a clear roadmap.',translator:'MODE: Translator. Translate accurately between Urdu, Roman Urdu, English and other languages keeping the tone; translation first, notes after.'};
+const COACH='CODING PLAYBOOK. WORKFLOW: clarify the goal only if truly ambiguous, plan briefly, write COMPLETE runnable code (no placeholders like "..."), say exactly how to run and test it, explain the key parts, then suggest next steps. Match the user level; for beginners use small steps and analogies. QUALITY: clear names, small functions, no duplication, handle errors and edge cases, validate inputs, comment the why, never hardcode secrets. DEBUGGING: reproduce, read the error from the bottom up, isolate, form a hypothesis, fix the root cause not the symptom, add a test, explain how to prevent it. ARCHITECTURE: separate concerns (UI, logic, data), design REST APIs with proper status codes and pagination, normalize databases and add indexes and migrations, choose auth carefully (hash passwords with bcrypt or argon2, sessions or JWT), consider caching, queues and scaling only when needed. SECURITY: think OWASP Top 10, use parameterized queries, escape output against XSS, apply least privilege, and never put API keys in front-end code (use a backend proxy). TESTING: unit and integration tests (pytest, jest, JUnit), mocks, test edge cases. PERFORMANCE: measure first, mind algorithm complexity, use indexes, lazy loading and memoization. GIT: small commits, branches, .gitignore, README. IDIOMS: Python (venv, type hints, pathlib, dataclasses, async), JavaScript/TypeScript (const/let, async/await, modules, strict types), HTML/CSS (semantic tags, accessibility, flexbox, grid, mobile-first), SQL (joins, CTEs, indexes), Java/Kotlin, C/C++ (memory safety, RAII), C#, PHP (PDO), Go, Rust (ownership), Bash (set -euo pipefail), Dart/Flutter (widgets, state management). PHONE WORKFLOWS: Acode, Spck, Termux (pkg install python nodejs git), Pydroid; deploy with GitHub Pages, Vercel or Netlify. HONESTY: never invent functions, libraries or options; if a version-specific detail is uncertain, say so and point to the official docs. For multi-file projects use file: blocks and give a folder structure first.';
+const CODEM=['coder','tutor','debug','reviewer','architect'];
+const isCode=()=>{const c=cur(),t=c&&(c.msgs.filter(m=>m.role==='user').pop()||{}).text||'';return CODEM.includes(L.get('jv_mode'))||/```|\b(code|coding|error|bug|function|python|javascript|typescript|java|html|css|sql|api|script|app|website|program|flutter|react|node)\b/i.test(t)};
+const MULTI='LANGUAGES: You understand and speak every major language and many smaller ones (Urdu, Roman Urdu, Hindi, Punjabi, Sindhi, Pashto, Balochi, Saraiki, Arabic, Persian, English, Chinese, Japanese, Korean, Turkish, Spanish, French, German, Italian, Portuguese, Russian, Bengali, Indonesian, Malay, Swahili and more). Always reply in the language and script the user writes in (Urdu script gets Urdu script, Roman Urdu gets Roman Urdu, English gets English); if the user asks for another language, switch at once. STYLE AND ACCENT: write each language the way a polished native speaker would: natural, clear, warm and respectful, with correct spelling and grammar and everyday idioms; keep Urdu simple and pure (avoid heavy Persian or Arabic words unless the topic is formal or religious), keep Hindi, Punjabi, Pashto, Arabic and other languages in their natural everyday register, and keep English neutral and easy to follow. Prefer short, clean sentences so replies also sound good when read aloud. Mix languages naturally when the user does. When translating, give the translation first, then short notes on tone, formal versus informal and alternatives, and keep names and technical terms accurate. As a language teacher: explain grammar simply, give pronunciation in Roman letters, example sentences with translations, short quizzes and common mistakes, and correct errors kindly. For rare languages or dialects be honest about uncertainty and never invent words. Respect cultural and religious context.';
+const LNAME={roman:'Roman Urdu',ur:'Urdu in Urdu script',en:'English',ar:'Arabic',hi:'Hindi in Devanagari script',es:'Spanish',fr:'French',de:'German',zh:'Chinese',tr:'Turkish',fa:'Persian'},LCODE={roman:'en-IN',ur:'ur-PK',en:'en-US',ar:'ar-SA',hi:'hi-IN',es:'es-ES',fr:'fr-FR',de:'de-DE',zh:'zh-CN',tr:'tr-TR',fa:'fa-IR'};
+const LANGLINE=()=>{const l=L.get('jv_lang');return LNAME[l]?' The user chose '+LNAME[l]+' as the preferred reply language: use it unless the user writes in or asks for another language.':''};
+const LIFE='LIFE AND GENERAL KNOWLEDGE: You are also a warm everyday companion who helps with normal human needs: health and first aid basics, sleep, nutrition and fitness, cooking and recipes, home and household tips, cleaning, repairs, shopping advice, personal budgeting, saving and basic money sense, jobs and career, studying and exams, relationships, family and parenting tips, communication and manners, travel, time management, mental wellbeing and stress, phone and computer help, government paperwork (CNIC, passport, driving license, bills, bank accounts) and basic law awareness. You also know general knowledge: science, nature, history, geography, religion and culture (always respectful), math, languages, sports, technology and the world. Default to a Pakistani and South Asian context (PKR, local foods, customs, services) unless the user says otherwise. Give practical step-by-step answers with simple examples; ask at most one question when you truly need details. SAFETY: for medical, legal and money topics give useful general information, mention warning signs that need a doctor or emergency help (Pakistan: Police 15, Rescue 1122, Edhi 115, Fire 16), never diagnose with certainty, and never give medicine doses for children (point to the label, a pharmacist or a doctor). If someone seems in emotional crisis, respond with care, encourage reaching a trusted person or a local helpline, and stay supportive. For news, prices, sports results or anything recent, say your knowledge may be outdated and suggest turning on internet search or checking an official source. Be honest when you do not know.';
+const FILES='FILES, PDF AND VIDEO: You can create real downloadable files through this app. When asked to create files, put each file in its own fenced block whose info string is file:NAME (for example ```file:index.html or ```file:src/app.py) containing the COMPLETE file content; the app adds Save buttons and a ZIP button for all files. For a PDF, write the document in Markdown inside a ```pdf block (# headings, - bullets, plain paragraphs; use English or Roman Urdu with Latin letters only). For a video, output a ```video block containing JSON like {"title":"My video","format":"16:9","scenes":[{"text":"Short caption","sec":4,"bg":"#1a2a6c,#b21f1f"}]} with 5 to 12 scenes (format 16:9 or 9:16, each text under 12 words); the app renders a silent animated-text video. After the blocks, tell the user in one line which button to press (Save, ZIP, PDF or Video). Never claim you cannot create files.';
+const EF={low:{lv:'low',n:20,p:'EFFORT: LOW. Answer immediately and concisely, no long preamble.'},medium:{lv:'medium',n:40,p:'EFFORT: MEDIUM. Balanced: clear and complete but compact.'},high:{lv:'high',n:80,p:'EFFORT: HIGH. Think carefully, cover edge cases, and give a thorough, well-structured answer.'},extreme:{lv:'high',n:200,p:'EFFORT: EXTREME. Reason deeply step by step, consider alternatives, verify the answer before finalizing, and give an exhaustive expert-level response with examples.'}};
+const eff=()=>EF[L.get('jv_eff')||'medium']||EF.medium;
+const TPL='Naam: \nKaam / profession: \nSkills aur tools (jaise Acode, HTML, JS): \nChal rahe projects: \nMere goals: \nLexi kaise baat kare (style): \nZaroori baatein (budget, device, limits): ';
+const sys=()=>BASE+' '+MULTI+LANGLINE()+' '+LIFE+' '+FILES+' '+eff().p+' '+(MODES[L.get('jv_mode')||'general']||'')+(isCode()?' '+COACH:'')+(L.get('jv_me')?' About the user (use when relevant): '+L.get('jv_me'):'');
+const mk=g=>({get:k=>{try{return g().getItem(k)}catch(e){return null}},set:k=>0,put:(k,v)=>{try{g().setItem(k,v);return 1}catch(e){return 0}},del:k=>{try{g().removeItem(k)}catch(e){}}});
+const L=mk(()=>localStorage),Ss=mk(()=>sessionStorage);
+const S={chats:[],id:null,busy:false,ac:null};
+const NC=/whisper|guard|tts|embed|orpheus|playai|moderation|dall|davinci|babbage/i,rank=id=>/llama-3\.3-70b/.test(id)?0:/llama.*70b/.test(id)?1:/gpt-oss-120b/.test(id)?2:/llama/.test(id)?3:/gpt-oss|qwen/.test(id)?4:5;
+async function chatModels(k){try{const r=await fetch(base()+'/models',{headers:{Authorization:'Bearer '+k}}),d=await r.json();return (d.data||[]).map(x=>x.id).filter(x=>x&&!NC.test(x)).sort((a,b)=>rank(a)-rank(b))}catch(e){return []}}
+const MY_KEY='';
+/* PUBLIC SERVER: agar Lexi ko dosto ke liye access-code se chalana hai to worker ka link yahan ' ' ke andar likho, jaise const LEXI_SERVER='https://lexi.naam.workers.dev'; Phir dost sirf apna access code daalenge. */
+const LEXI_SERVER=window.LEXI_SERVER||'';
+(function(){try{const q=new URLSearchParams(location.search).get('s');if(q&&!LEXI_SERVER&&/^https:\/\/[\w.-]+/.test(q)&&confirm('Lexi ko is server se jodna hai?\n\n'+q+'\n\nSirf tab OK dabao jab ye link tumhe tumhare dost ya owner ne diya ho.'))L.put('jv_server',q.replace(/\/+$/,''));if(q)history.replaceState(null,'',location.pathname)}catch(e){}})();
+const SRV=()=>LEXI_SERVER||L.get('jv_server')||'';
+/* PERMANENT KEY (sirf apne personal istemal ke liye): apni key upar ' ' ke andar paste karo, jaise const MY_KEY='gsk_abc...'; Is file ko kabhi public mat karna jab usme key ho. */
+function detect(k){k=(k||'').trim();if(/^sk-ant-/.test(k))return{p:'claude',b:'',m:'claude-haiku-5-5',n:'Claude (Anthropic)'};if(/^gsk_/.test(k))return{p:'openai',b:'https://api.groq.com/openai/v1',m:'llama-3.3-70b-versatile',n:'Groq'};
+if(/^sk-or-/.test(k))return{p:'openai',b:'https://openrouter.ai/api/v1',m:'meta-llama/llama-3.3-70b-instruct:free',n:'OpenRouter'};if(/^sk-/.test(k))return{p:'openai',b:'https://api.openai.com/v1',m:'gpt-4o-mini',n:'OpenAI'};return SRV()&&k?{p:'openai',b:SRV().replace(/\/+$/,''),m:'',n:'Lexi Server'}:null}
+const MYD=()=>MY_KEY.trim()?detect(MY_KEY):null,PROV=()=>L.get('jv_prov')||(MYD()&&MYD().p)||(SRV()?'openai':'puter'),key=()=>PROV()==='puter'?'puter':Ss.get('jv_key_'+PROV())||L.get('jv_key_'+PROV())||(MYD()&&MYD().p===PROV()?MY_KEY.trim():'')||(SRV()&&PROV()==='openai'&&base()===SRV()?'public':''),model=()=>L.get('jv_model_'+PROV())||(MYD()&&MYD().p===PROV()&&MYD().m)||(SRV()&&PROV()==='openai'&&base()===SRV()?'lexi':'')||(PROV()==='claude'?'claude-haiku-5-5':PROV()==='puter'?'':'llama-3.3-70b-versatile'),base=()=>(L.get('jv_base')||(MYD()&&MYD().b)||SRV()||'https://api.groq.com/openai/v1').replace(/\/+$/,'');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',2400)}
+const KW=/\b(?:const|let|var|function|return|if|else|elif|for|while|class|import|from|export|default|def|async|await|new|try|catch|except|finally|throw|raise|true|false|null|None|True|False|in|of|and|or|not|self|this|with|as|switch|case|break|continue|public|private|static|void|int|string|echo|fi|then|do|done|fn|func|package|using|struct|enum|interface|extends|implements|lambda|pass|yield|assert|global|del|is|float|double|bool|char|long|final|override|abstract|protected|namespace|SELECT|FROM|WHERE|INSERT|UPDATE|DELETE|CREATE|TABLE|JOIN|VALUES|INTO|ORDER|BY|GROUP|LIMIT)\b/.source,STR=/"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`[^`]*`/.source,NUM=/\b\d+\.?\d*\b/.source,CH=/#[^\n]*/.source,CS=/\/\/[^\n]*|\/\*[\s\S]*?\*\//.source;
+const hashL=/^(py|python|bash|sh|shell|yaml|yml|rb|ruby)$/,plainL=/^(html|xml|css|svg|markdown|md|json|text|txt|pdf|video)$/;
+function hl(c,l){l=(l||'').toLowerCase();if(plainL.test(l))return esc(c);const re=new RegExp('('+(hashL.test(l)?CH:CS)+')|('+STR+')|('+NUM+')|('+KW+')','g');let o='',i=0,m;
+while((m=re.exec(c))){o+=esc(c.slice(i,m.index))+'<span class="t'+(m[1]?'c':m[2]?'s':m[3]?'n':'k')+'">'+esc(m[0])+'</span>';i=m.index+m[0].length}return o+esc(c.slice(i))}
+const md0=src=>md(src);
+function md(src){const bl=[];
+const inl=t=>t.replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+let s=src.replace(/```([\w:.\-\/+#]*)\n?([\s\S]*?)(```|$)/g,(_,l,c)=>{const fn=l.indexOf('file:')===0?l.slice(5):'',ex=(fn?fn.split('.').pop():l).toLowerCase(),lab=fn||l||'code',sp=l==='pdf'?'<button data-pdf>📄 PDF</button>':l==='video'?'<button data-vid>🎬 Video</button>':'';bl.push('<div class="code"><div class="ch"><span>'+esc(lab)+'</span><span class="cb">'+sp+(/^(html|js|javascript|py|python)$/.test(ex)?'<button data-run>▶ Run</button>':'')+(sp?'':'<button data-save>⤓ Save</button>')+'<button data-copy>Copy</button></span></div><pre><code>'+hl(c.replace(/\n$/,''),ex)+'</code></pre></div>');return '\u0000'+(bl.length-1)+'\u0000'});
+s=esc(s).replace(/(^\|.+\|[ \t]*(\n|$))+/gm,b=>{const r=b.trim().split('\n').map(x=>x.trim().replace(/^\||\|$/g,'').split('|').map(c=>inl(c.trim())));const h=r.shift();if(r[0]&&r[0].every(c=>/^[\s:-]*$/.test(c)))r.shift();
+bl.push('<div class="tw"><table><thead><tr>'+h.map(c=>'<th>'+c+'</th>').join('')+'</tr></thead><tbody>'+r.map(x=>'<tr>'+x.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>');return '\u0000'+(bl.length-1)+'\u0000\n'});
+let o='',ls=null;const cl=()=>{if(ls){o+='</'+ls+'>';ls=null}};
+for(const ln of s.split('\n')){let m;
+if(m=ln.match(/^\u0000(\d+)\u0000$/)){cl();o+=bl[m[1]]}
+else if(m=ln.match(/^(#{1,4})\s+(.*)/)){cl();const n=m[1].length+1;o+='<h'+n+' dir="auto">'+inl(m[2])+'</h'+n+'>'}
+else if(m=ln.match(/^\s*[-*•]\s+(.*)/)){if(ls!=='ul'){cl();o+='<ul>';ls='ul'}o+='<li dir="auto">'+inl(m[1])+'</li>'}
+else if(m=ln.match(/^\s*\d+[.)]\s+(.*)/)){if(ls!=='ol'){cl();o+='<ol>';ls='ol'}o+='<li dir="auto">'+inl(m[1])+'</li>'}
+else if(m=ln.match(/^&gt;\s?(.*)/)){cl();o+='<blockquote dir="auto">'+inl(m[1])+'</blockquote>'}
+else if(/^-{3,}$/.test(ln.trim())){cl();o+='<hr>'}
+else if(!ln.trim())cl();else{cl();o+='<p dir="auto">'+inl(ln)+'</p>'}}
+cl();return o}
+const cur=()=>S.chats.find(c=>c.id===S.id);
+function save(){S.chats.sort((a,b)=>b.t-a.t);const js=()=>JSON.stringify(S.chats,(k,v)=>k==='img'?undefined:v);while(!L.put('jv_chats',js())&&S.chats.length>1)S.chats.pop();side()}
+function newChat(){let c=cur();if(c&&!c.msgs.length){render();closeSide();return c}c={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:'Nayi chat',msgs:[],t:Date.now()};S.chats.unshift(c);S.id=c.id;save();render();closeSide();return c}
+function side(){const q=$('q').value.toLowerCase(),b=$('list');b.replaceChildren();S.chats.filter(c=>c.msgs.length&&c.title.toLowerCase().includes(q)).forEach(c=>{const d=document.createElement('div');d.className='ci'+(c.id===S.id?' on':'');d.innerHTML='<span></span><button title="Rename">✎</button><button title="Delete">✕</button>';d.firstChild.textContent=c.title;
+d.onclick=()=>{if(S.busy)return;S.id=c.id;render();side();closeSide()};
+d.children[1].onclick=e=>{e.stopPropagation();const n=prompt('Naya naam:',c.title);if(n&&n.trim()){c.title=n.trim().slice(0,60);save();render()}};
+d.children[2].onclick=e=>{e.stopPropagation();if(S.busy||!confirm('Ye chat delete karni hai?'))return;S.chats=S.chats.filter(x=>x!==c);if(S.id===c.id){S.id=null;S.chats.find(x=>!x.msgs.length)?S.id=S.chats.find(x=>!x.msgs.length).id:0}save();if(!cur())newChat();else render()};b.appendChild(d)})}
+function btn(t,f){const b=document.createElement('button');b.className='ab';b.textContent=t;b.onclick=f;return b}
+function fill(r,m,last){r.querySelector('.txt').innerHTML=m.text?md(m.text):(m.err?'':'<div class="dots"><i></i><i></i><i></i></div>');
+if(m.err){const e=document.createElement('div');e.className='err';e.textContent=m.err;r.querySelector('.txt').appendChild(e)}
+const a=r.querySelector('.acts');a.replaceChildren();if(S.busy&&last)return;
+if(m.text)a.append(btn('Copy',()=>navigator.clipboard.writeText(m.text).then(()=>toast('Copy ho gaya'),()=>toast('Copy nahi ho saka'))),btn('🔊 Suno',()=>speak(m.text)),btn('📄 PDF',()=>mkPdf(m.text)));if(/```file:/.test(m.text))a.append(btn('📦 ZIP',()=>zipFiles(m.text)));
+if(last){if(/token limit par ruk gaya/.test(m.text))a.append(btn('▶ Jari rakho',()=>{$('p').value='Jari rakho, jahan ruke the wahin se.';$('f').requestSubmit()}));a.append(btn('↻ Dobara',regen))}}
+function thumb(a){if(a.data&&a.mime.startsWith('image/')){const e=document.createElement('img');e.src='data:'+a.mime+';base64,'+a.data;e.className='th';return e}const e=document.createElement('div');e.className='fch';e.textContent='📄 '+(a.name||'file');return e}
+function row(m,last,i){const r=document.createElement('div');if(m.role==='user'){r.className='msg user';r.innerHTML='<div class="bub" dir="auto"></div>';r.firstChild.textContent=m.text;if(m.img)r.firstChild.prepend(thumb(m.img));if(!S.busy){const e=document.createElement('button');e.className='ed';e.textContent='✎';e.title='Edit karo';e.onclick=()=>edit(i);r.prepend(e)}return r}
+r.className='msg';r.innerHTML='<div class="av">✦</div><div class="body"><div class="txt"></div><div class="acts"></div></div>';fill(r,m,last);return r}
+function render(keep){const c=cur(),b=$('msgs'),sc0=$('scroll'),pos=sc0.scrollTop,near=sc0.scrollHeight-sc0.scrollTop-sc0.clientHeight<200;b.replaceChildren();$('welcome').style.display='';$('ttl').textContent=c&&c.msgs.length?c.title:'Lexi';
+if(c)c.msgs.forEach((m,i)=>b.appendChild(row(m,i===c.msgs.length-1,i)));const s=$('scroll');s.scrollTop=(keep&&!near)?pos:s.scrollHeight;shrink();chip()}
+function chip(){pillUI();hudStatus();const c=$('chip'),k=!!key();c.className='chip'+(k?'':' off');c.textContent=k?(model()||'Puter AI')+' · '+(L.get('jv_eff')||'medium'):'Key add karo'}
+const stick=()=>{const s=$('scroll');if(s.scrollHeight-s.scrollTop-s.clientHeight<170)s.scrollTop=s.scrollHeight};
+function fp(x,A){const im=x.img;if(!im)return A?[{type:'text',text:x.text}]:x.text;
+if(im.text!=null){const t='[File: '+im.name+']\n'+im.text+'\n\n'+x.text;return A?[{type:'text',text:t}]:t}
+if(A)return [{type:im.mime==='application/pdf'?'document':'image',source:{type:'base64',media_type:im.mime,data:im.data}},{type:'text',text:x.text}];
+if(im.mime==='application/pdf')throw Error('PDF sirf Claude provider mein chalti hai. Settings mein Claude chuno, ya text/image bhejo.');
+return [{type:'text',text:x.text},{type:'image_url',image_url:{url:'data:'+im.mime+';base64,'+im.data}}]}
+async function streamPuter(c,m,tick){if(!window.puter)throw Error('Puter load nahi hua. Internet check karo aur page refresh karo.');
+let sp=null;try{if(puter.auth&&typeof puter.auth.isSignedIn==='function'&&!puter.auth.isSignedIn())sp=puter.auth.signIn()}catch(e){}
+let h=c.msgs.filter(x=>x!==m&&x.text).slice(-eff().n);while(h.length&&h[0].role!=='user')h.shift();const last=h[h.length-1],opt={stream:true},md0=model();if(md0)opt.model=md0;
+const msgs=[{role:'system',content:sys()},...h.map(x=>({role:x.role==='user'?'user':'assistant',content:x.img&&x.img.text!=null?'[File: '+x.img.name+']\n'+x.img.text+'\n\n'+x.text:x.text}))];S.ac=new AbortController();let resp;
+try{if(sp)await sp;if(last&&last.img&&last.img.data){if(last.img.mime==='application/pdf')throw Error('PDF is mode mein nahi chalti. Image ya text file bhejo.');resp=await puter.ai.chat(last.text,'data:'+last.img.mime+';base64,'+last.img.data,opt)}else resp=await puter.ai.chat(msgs,opt);
+if(resp&&typeof resp[Symbol.asyncIterator]==='function'){for await(const p of resp){if(S.ac.signal.aborted)break;const t=p&&p.text||'';if(t){m.text+=t;tick()}}}
+else{const mc=resp&&resp.message&&resp.message.content;m.text=(typeof mc==='string'?mc:Array.isArray(mc)?mc.map(x=>x.text||'').join(''):'')||(resp&&resp.text)||'';tick()}}
+catch(e){if(S.ac.signal.aborted)return;const msg=(e&&(e.message||(e.error&&e.error.message)||e.msg))||(typeof e==='string'?e:'');throw Error(/cancel|clos|auth|sign/i.test(msg)||!msg?'Puter login zaroori hai. Popup mein Sign in karo aur dobara bhejo.':msg)}
+if(!m.text&&!S.ac.signal.aborted)throw Error('Jawab nahi aaya. Dobara try karo.')}
+function errMsg(st,m){if(st===429)return /free limit/i.test(m||'')?m+' Ya Settings (⚙) mein Provider "Puter (free)" chuno, wahan koi limit Lexi ki taraf se nahi.':'Rate limit ya quota lag gayi. Thori der baad try karo.';if(st===500||st===503||st===529)return 'Provider par abhi load zyada hai ('+st+'). Thori der baad dobara try karo.';
+if(st===401||st===403)return 'API key ya permission ka masla: '+m;if(st===402)return 'Credit/balance ka masla: '+m;if(st===400||st===404)return 'Model ya request ka masla: '+m+' — Settings mein "Models load karo" daba kar sahi model chuno.';return m||'API request fail hui.'}
+async function stream(c,m,tick){if(PROV()==='puter')return streamPuter(c,m,tick);const A=PROV()==='claude',k=key();if(!k){openSet();throw Error('Pehle Settings mein API key add karo.')}
+let h=c.msgs.filter(x=>x!==m&&x.text).slice(-eff().n);while(h.length&&h[0].role!=='user')h.shift();
+const hist=h.map(x=>({role:x.role==='user'?'user':'assistant',content:fp(x,A)}));
+const tok=+(L.get('jv_tok2')||0)||(A?32000:0),tb={high:4000,extreme:10000}[L.get('jv_eff')]||0,temp=+(L.get('jv_temp')||.7);let th=A&&tb>0,mtk=tok;
+const mk=()=>{if(A){const b={model:model(),max_tokens:th?Math.max(mtk,tb+4000):mtk,system:sys(),messages:hist,stream:true};if(th)b.thinking={type:'enabled',budget_tokens:tb};else b.temperature=Math.min(temp,1);if(L.get('jv_web')==='1')b.tools=[{type:'web_search_20250305',name:'web_search',max_uses:3}];return JSON.stringify(b)}
+return JSON.stringify({model:model(),messages:[{role:'system',content:sys()},...hist],stream:true,...(tok?{max_tokens:tok}:{}),temperature:temp})};
+const url=A?'https://api.anthropic.com/v1/messages':base()+'/chat/completions';
+const hd=A?{'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}:{'Content-Type':'application/json',Authorization:'Bearer '+k};let res,to=false,fixed=false,rl=0;
+for(let a=0;a<6;a++){S.ac=new AbortController();const tm=setTimeout(()=>{to=true;S.ac.abort()},180000);
+try{res=await fetch(url,{method:'POST',headers:hd,signal:S.ac.signal,body:mk()})}
+catch(e){clearTimeout(tm);if(to)throw Error('Jawab mein bohat der lagi. Dobara try karo.');if(e.name==='AbortError')throw e;throw Error('Network request fail hui (internet ya provider ka CORS). Internet check karo.')}
+clearTimeout(tm);if(res.status===429&&rl<3){rl++;const d=await res.clone().json().catch(()=>({})),mm=/in\s+(?:(\d+)m)?\s*([\d.]+)s/i.exec(JSON.stringify(d)),w=Math.ceil(+res.headers.get('retry-after')||(mm?(+mm[1]||0)*60+ +mm[2]:5));
+if(w<=60&&!/free limit/i.test(JSON.stringify(d))){toast('Limit lagi hai, '+w+' second mein khud dobara try karti hoon…');await new Promise(r=>setTimeout(r,w*1000+300));if(S.ac.signal.aborted)throw Object.assign(Error('stop'),{name:'AbortError'});continue}
+if(!A&&base()!==SRV()){const ids=await chatModels(k),nx=ids.find(x=>x!==model());if(nx){L.put('jv_model_openai',nx);toast('Limit lagi — model badal kar '+nx+' kar diya');chip();continue}}}
+if(res.status===400&&th){const d=await res.clone().json().catch(()=>({}));if(/thinking|budget/i.test(JSON.stringify(d))){th=false;continue}}
+if((res.status===400||res.status===404)&&!A&&!fixed&&base()!==SRV()){const d=await res.clone().json().catch(()=>({}));if(/model/i.test(JSON.stringify(d))){const ids=await chatModels(k);if(ids.length&&!ids.includes(model())){fixed=true;L.put('jv_model_openai',ids[0]);toast('Model badal kar '+ids[0]+' kar diya');chip();continue}}}
+if(res.status===400&&A&&mtk>8192){const d=await res.clone().json().catch(()=>({}));if(/max_tokens|max tokens/i.test(JSON.stringify(d))){mtk=8192;continue}}
+if((res.status===400||res.status===413)&&hist.length>2){const d=await res.clone().json().catch(()=>({}));if(/context|too large|too long|reduce|maximum.*tokens|tokens per minute/i.test(JSON.stringify(d))){hist.splice(0,Math.ceil(hist.length/2));while(hist.length&&hist[0].role!=='user')hist.shift();toast('Chat bohat lambi thi, purani baatein kam karke dobara bhej rahi hoon');continue}}
+if(!(res.status===503||res.status===529)||a>3)break;await new Promise(r=>setTimeout(r,1500))}
+if(!res.ok){let d={};try{d=await res.json()}catch(e){}const e=d.error;throw Error(errMsg(res.status,(e&&(e.message||(typeof e==='string'?e:'')))||''))}
+const rd=res.body.getReader(),dc=new TextDecoder(),src=new Map();let buf='',fr='';
+for(;;){const{done,value}=await rd.read();if(done)break;buf+=dc.decode(value,{stream:true});let i;
+while((i=buf.indexOf('\n'))>=0){const ln=buf.slice(0,i).trim();buf=buf.slice(i+1);if(ln.indexOf('data:'))continue;const raw=ln.slice(5).trim();if(raw==='[DONE]')continue;
+try{const j=JSON.parse(raw);let t='';
+if(A){if(j.type==='content_block_delta'&&j.delta&&j.delta.type==='text_delta')t=j.delta.text;else if(j.type==='message_delta'&&j.delta&&j.delta.stop_reason)fr=j.delta.stop_reason;
+else if(j.type==='content_block_start'&&j.content_block&&j.content_block.type==='web_search_tool_result'&&Array.isArray(j.content_block.content))j.content_block.content.forEach(r=>r.url&&src.set(r.url,(r.title||r.url).replace(/[\[\]]/g,'')));
+else if(j.type==='error')throw Error((j.error&&j.error.message)||'Stream error')}
+else{const ch=j.choices&&j.choices[0];if(ch){t=(ch.delta&&ch.delta.content)||'';if(ch.finish_reason)fr=ch.finish_reason}}
+if(t){m.text+=t;tick()}}catch(e){if(!(e instanceof SyntaxError))throw e}}}
+if(src.size&&m.text)m.text+='\n\n**Sources:**\n'+[...src].slice(0,6).map(([u,t])=>'- ['+t+']('+u+')').join('\n');
+if(!m.text)throw Error('Jawab nahi aaya (khali response). Sawal thora badal ke try karo.');
+if(fr==='max_tokens'||fr==='length'){m.text+='\n\n_…jawab token limit par ruk gaya. Settings mein lambai barha sakte ho._';tick()}}
+function ui(){const b=$('send');b.textContent=S.busy?'■':'↑';b.classList.toggle('stop',S.busy);document.body.classList.toggle('busy',!!S.busy)}
+async function run(c){const m={role:'model',text:''};c.msgs.push(m);c.t=Date.now();S.busy=true;ui();render();const r=$('msgs').lastElementChild;
+try{let q=0;await stream(c,m,()=>{if(!q)q=requestAnimationFrame(()=>{q=0;const sc=$('scroll'),nr=sc.scrollHeight-sc.scrollTop-sc.clientHeight<120;fill(r,m,true);if(nr)sc.scrollTop=sc.scrollHeight})})}catch(e){if(e.name!=='AbortError')m.err=e.message}
+S.busy=false;S.ac=null;if(!m.text&&!m.err)c.msgs.pop();save();ui();render(true)}
+function regen(){const c=cur();if(!c||S.busy)return;if(c.msgs.length&&c.msgs[c.msgs.length-1].role==='model')c.msgs.pop();run(c)}
+$('f').onsubmit=e=>{e.preventDefault();if(S.busy){S.ac&&S.ac.abort();return}let t=$('p').value.trim();if(!t&&!pend)return;if(!t)t='Is file/image ke baare mein batao.';const mm=t.match(/^(?:yaad rakho|remember)\s*[:\-]\s*(.+)/i);if(mm){L.put('jv_me',((L.get('jv_me')||'')+'\n'+mm[1]).trim().slice(-20000));toast('Yaad kar liya ✓')}const c=cur()||newChat();
+c.msgs.push(pend?{role:'user',text:t,img:pend}:{role:'user',text:t});pend=null;pv();if(c.title==='Nayi chat')c.title=t.replace(/\s+/g,' ').slice(0,40);$('p').value='';fit();run(c)};
+const fit=()=>{const p=$('p');p.style.height='auto';p.style.height=Math.min(p.scrollHeight,170)+'px'};$('p').oninput=fit;
+$('p').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!matchMedia('(pointer:coarse)').matches){e.preventDefault();if(!S.busy)$('f').requestSubmit()}};
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{if(b.dataset.m){L.put('jv_mode',b.dataset.m);$('mode2').value=b.dataset.m;pillUI()}const v=b.dataset.p,ask=/:$/.test(v);$('p').value=ask?v+' ':v;fit();$('p').focus();if(!ask)$('f').requestSubmit();else toast('Apni tafseel likho, phir send (↑) dabao')});
+$('msgs').onclick=e=>{const rb=e.target.closest('[data-run],[data-save],[data-pdf],[data-vid]');if(rb)return act(rb);const b=e.target.closest('[data-copy]');if(b){navigator.clipboard.writeText(b.closest('.code').querySelector('code').textContent).then(()=>{b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy',1500)},()=>toast('Copy nahi ho saka'))}};
+const FEM=/female|woman|zira|heera|hazel|susan|samantha|victoria|karen|moira|tessa|fiona|veena|neerja|swara|aria|jenny|sonia|libby|natasha|salma|zariyah|hoda|laila|amira|yelda|emel|elvira|katja|conchita|lucia|paulina|monica|helena|denise|eloise|yunxi|xiaoxiao|xiaoyi|nanami|sunhi|svetlana|irina|dariya|filiz|uzma|asad/i;
+let VOICES=[];function loadVoices(){try{VOICES=speechSynthesis.getVoices()||[]}catch(e){}}
+try{if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}}catch(e){}
+function pickVoice(lang){
+ const nm=L.get('jv_voice');
+ if(nm){const v=VOICES.find(x=>x.name===nm);if(v)return v}
+ const norm=s=>(s||'').toLowerCase().replace(/_/g,'-');
+ const lc=norm(lang),base=lc.split('-')[0];
+ let c=VOICES.filter(v=>norm(v.lang)===lc);
+ if(!c.length)c=VOICES.filter(v=>norm(v.lang).startsWith(base+'-'));
+ if(!c.length)return null;
+ const sc=v=>{
+  const n=(v.name||'').toLowerCase(),vl=norm(v.lang);
+  let score=0;
+  if(/male/i.test(n)&&!/female/i.test(n))score-=12;
+  if(FEM.test(n))score+=7;
+  if(/google|natural|neural|enhanced|premium|online/i.test(n))score+=5;
+  if(/microsoft|siri/i.test(n))score+=2;
+  if(v.localService)score+=1;
+  if(vl===lc)score+=8;
+  if(base==='en'&&/en-(in|pk)/.test(vl))score+=5;
+  if(base==='ur'&&/ur-pk/.test(vl))score+=8;
+  return score
+ };
+ return c.slice().sort((a,b)=>sc(b)-sc(a))[0]
+}
+function fillVoices(){loadVoices();const el=$('voice');if(!el)return;el.innerHTML='<option value="">Auto (behtareen female awaz)</option>'+VOICES.slice().sort((a,b)=>(a.lang+a.name).localeCompare(b.lang+b.name)).slice(0,200).map(v=>'<option value="'+esc(v.name)+'">'+esc(v.name+' ('+v.lang+')')+'</option>').join('');el.value=L.get('jv_voice')||''}
+function speakLang(t){const pl=L.get('jv_lang')||'auto';
+if(/[\u0600-\u06FF]/.test(t)){if(/[\u0679\u0688\u0691\u06BA\u06D2\u06BE\u06C1]/.test(t))return 'ur-PK';if(pl==='fa')return 'fa-IR';if(pl==='ar')return 'ar-SA';if(/[\u0629\u0649\u064A\u0643]/.test(t)&&!/[\u06CC\u06A9]/.test(t))return 'ar-SA';return 'ur-PK'}
+if(/[\u0900-\u097F]/.test(t))return 'hi-IN';if(/[\u0980-\u09FF]/.test(t))return 'bn-BD';if(/[\u0A00-\u0A7F]/.test(t))return 'pa-IN';if(/[\u3040-\u30FF]/.test(t))return 'ja-JP';if(/[\uAC00-\uD7AF]/.test(t))return 'ko-KR';if(/[\u4E00-\u9FFF]/.test(t))return 'zh-CN';if(/[\u0400-\u04FF]/.test(t))return 'ru-RU';if(/[\u0370-\u03FF]/.test(t))return 'el-GR';if(/[\u0E00-\u0E7F]/.test(t))return 'th-TH';
+return {es:1,fr:1,de:1,tr:1,en:1}[pl]?LCODE[pl]:'en-IN'}
+function speak(t){if(!window.speechSynthesis)return toast('Is browser mein voice output nahi hai.');speechSynthesis.cancel();loadVoices();
+const txt=t.replace(/```[\s\S]*?```/g,' code ').replace(/https?:\/\/\S+/g,' link ').replace(/[*#`_>\[\]|~]/g,'').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu,'').replace(/\s+/g,' ').trim();if(!txt)return;
+const lang=speakLang(txt),v=pickVoice(lang),parts=[];let cur='';(txt.match(/[^.!?\u06D4\u061F\u0964\n]+[.!?\u06D4\u061F\u0964]?/g)||[txt]).forEach(x=>{if((cur+x).length>180&&cur){parts.push(cur);cur=x}else cur+=x});if(cur)parts.push(cur);
+parts.forEach(p=>{const u=new SpeechSynthesisUtterance(p.trim());if(v){u.voice=v;u.lang=v.lang}else u.lang=lang;u.rate=(lang==='ur-PK'||lang==='en-IN')?.92:.94;u.pitch=1.12;speechSynthesis.speak(u)})}
+$('vtest').onclick=()=>{L.put('jv_voice',$('voice').value);const x={ur:'سلام! میں لیکسی ہوں۔ آپ کی کیا مدد کر سکتی ہوں؟',ar:'مرحبا! أنا ليكسي. كيف يمكنني مساعدتك؟',hi:'नमस्ते! मैं लेक्सी हूँ। मैं आपकी कैसे मदद कर सकती हूँ?',en:'Hello! I am Lexi. How can I help you today?',roman:'Assalam o Alaikum! Main Lexi hoon. Main aapki kya madad kar sakti hoon?',es:'Hola, soy Lexi. ¿En qué puedo ayudarte?',fr:'Bonjour, je suis Lexi. Comment puis-je vous aider ?',de:'Hallo, ich bin Lexi. Wie kann ich dir helfen?',zh:'你好，我是Lexi。有什么可以帮你的吗？',tr:'Merhaba, ben Lexi. Sana nasıl yardımcı olabilirim?',fa:'سلام! من لکسی هستم. چطور می‌توانم کمکتان کنم؟'};speak(x[$('lang').value]||x.roman)}
+$('mic').onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return toast('Voice input ke liye Chrome use karo.');const r=new R();r.lang=LCODE[L.get('jv_lang')]||'ur-PK';$('mic').textContent='🔴';r.onresult=e=>{$('p').value=($('p').value+' '+e.results[0][0].transcript).trim();fit();$('p').focus()};r.onerror=()=>toast('Voice fail hua. Mic permission check karo.');r.onend=()=>$('mic').textContent='🎙';r.start()};
+let pend=null;
+$('file').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const bin=f.type.startsWith('image/')||f.type==='application/pdf';if(f.size>(bin?2e7:2e6))return toast(bin?'File 20MB se choti honi chahiye.':'Text file 2MB se choti honi chahiye.');const r=new FileReader();
+r.onload=()=>{pend=bin?{mime:f.type,data:r.result.split(',')[1],name:f.name}:{mime:'text/plain',text:r.result,name:f.name};pv()};bin?r.readAsDataURL(f):r.readAsText(f)};
+function pv(){const p=$('pv');p.replaceChildren();if(!pend)return;const w=document.createElement('div');w.className='pvi';w.append(thumb(pend));const b=document.createElement('button');b.type='button';b.textContent='✕';b.onclick=()=>{pend=null;pv()};w.append(b);p.append(w)}
+$('key').oninput=()=>{const d=detect($('key').value);if(!d)return;$('prov').value=d.p;$('bw').hidden=d.p!=='openai';if(d.b)$('base').value=d.b;$('model').value=L.get('jv_model_'+d.p)||d.m;$('kinfo').textContent=d.n==='Lexi Server'?'✓ Access code mil gaya. Ab Save dabao.':'✓ '+d.n+' ki key pehchan li. Ab Save dabao.'};
+function serverUI(){if(!SRV())return;document.querySelector('.mc h3').textContent='Lexi Settings';document.querySelector('.mc>small').textContent='Lexi free chal rahi hai, kuch daalna zaroori nahi. Zyada istemal ke liye apni free Groq key (gsk_...) ya access code yahan daalo.';document.querySelector('label[for=key]').textContent='Apni key ya access code (optional)';$('key').placeholder='gsk_... ya access code';$('kinfo').textContent=''}
+function provUI(){const p=$('prov').value;$('psign').style.display=p==='puter'?'':'none';$('bw').hidden=p!=='openai';$('msel').hidden=true;$('key').value='';$('key').placeholder=(Ss.get('jv_key_'+p)||L.get('jv_key_'+p))?'Key saved ✓ (naya paste karke badal sakte ho)':(p==='claude'?'console.anthropic.com se key':'Provider ki API key');$('rem').checked=true;$('model').value=L.get('jv_model_'+p)||(p==='claude'?'claude-haiku-5-5':p==='puter'?'':'llama-3.3-70b-versatile')}
+$('prov').onchange=provUI;$('psign').onclick=async()=>{try{if(!window.puter)throw 0;await puter.auth.signIn();toast('Puter login ho gaya')}catch(e){toast('Puter login nahi hua')}};$('msel').onchange=()=>{$('model').value=$('msel').value};
+function effUI(){const e=L.get('jv_eff')||'medium';document.querySelectorAll('#eff button').forEach(b=>b.classList.toggle('on',b.dataset.e===e))}
+document.querySelectorAll('#eff button').forEach(b=>b.onclick=()=>{L.put('jv_eff',b.dataset.e);effUI();chip();toast('Effort: '+b.dataset.e)});
+$('mode2').value=L.get('jv_mode')||'general';$('mode2').onchange=()=>L.put('jv_mode',$('mode2').value);effUI();
+$('tpl').onclick=()=>{$('me').value=($('me').value.trim()?$('me').value.trim()+'\n\n':'')+TPL;$('me').focus()};
+/*FILES_START*/
+const EXT={python:'py',javascript:'js',typescript:'ts',bash:'sh',shell:'sh',kotlin:'kt',rust:'rs',csharp:'cs','c++':'cpp',markdown:'md',yaml:'yml'};
+function dl(name,blob){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href)},4000);toast('Download: '+name)}
+function act(b){const box=b.closest('.code'),lab=box.querySelector('.ch span').textContent,code=box.querySelector('code').textContent;
+if(b.hasAttribute('data-run'))return runCode(b);
+if(b.hasAttribute('data-save')){const nm=/[.\/]/.test(lab)?lab:'code.'+(EXT[lab]||lab.replace(/\W/g,'')||'txt');return dl(nm.split('/').pop(),new Blob([code],{type:'text/plain'}))}
+if(b.hasAttribute('data-pdf'))return mkPdf(code);if(b.hasAttribute('data-vid'))return mkVideo(b,code)}
+const crcT=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+const crc=u=>{let c=-1;for(let i=0;i<u.length;i++)c=crcT[(c^u[i])&255]^(c>>>8);return(c^-1)>>>0};
+function zip(files){const en=new TextEncoder(),parts=[],cd=[];let off=0;const w16=(a,v)=>a.push(v&255,v>>8&255),w32=(a,v)=>a.push(v&255,v>>8&255,v>>16&255,v>>>24&255);
+files.forEach(f=>{const n=en.encode(f.name),d=en.encode(f.data),c=crc(d),h=[];w32(h,0x04034b50);w16(h,20);w16(h,0x0800);w16(h,0);w16(h,0);w16(h,0x21);w32(h,c);w32(h,d.length);w32(h,d.length);w16(h,n.length);w16(h,0);parts.push(new Uint8Array(h),n,d);
+const e=[];w32(e,0x02014b50);w16(e,20);w16(e,20);w16(e,0x0800);w16(e,0);w16(e,0);w16(e,0x21);w32(e,c);w32(e,d.length);w32(e,d.length);w16(e,n.length);w16(e,0);w16(e,0);w16(e,0);w16(e,0);w32(e,0);w32(e,off);cd.push(new Uint8Array(e),n);off+=h.length+n.length+d.length});
+let cl=0;cd.forEach(x=>cl+=x.length);const z=[];w32(z,0x06054b50);w16(z,0);w16(z,0);w16(z,files.length);w16(z,files.length);w32(z,cl);w32(z,off);w16(z,0);return new Blob([...parts,...cd,new Uint8Array(z)],{type:'application/zip'})}
+function zipFiles(t){const fs=[];t.replace(/```file:([^\n]+)\n([\s\S]*?)(```|$)/g,(_,n,c)=>{fs.push({name:n.trim().replace(/^\/+/,''),data:c.replace(/\n$/,'')})});if(!fs.length)return toast('Koi file block nahi mila.');dl('lexi-project.zip',zip(fs))}
+function printPdf(md){const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);const d=f.contentWindow.document;d.open();
+d.write('<!doctype html><html><head><meta charset="utf-8"><title>Lexi</title><style>body{font:14px/1.8 system-ui,"Noto Naskh Arabic","Noto Nastaliq Urdu",sans-serif;margin:24px;color:#111}pre{background:#f4f4f4;padding:10px;white-space:pre-wrap}code{font-family:monospace}table{border-collapse:collapse}td,th{border:1px solid #999;padding:4px 8px}.ch,button{display:none}</style></head><body>'+md0(md)+'</body></html>');d.close();
+toast('Print window mein "Save as PDF" chuno');setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){}setTimeout(()=>f.remove(),5000)},400)}
+function mkPdf(md){if(md.replace(/[‘’“”–—…•●▪]/g,'').match(/[^\x00-\xff]/))return printPdf(md);const W=595,H=842,M=50,cv=document.createElement('canvas').getContext('2d'),pages=[[]];let y=M,code=false;
+const clean=t=>t.replace(/\t/g,'    ').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[–—]/g,'-').replace(/…/g,'...').replace(/[•●▪]/g,'-').replace(/\*\*|__|`/g,'').replace(/[^\x20-\xff]/g,'?'),pe=t=>t.replace(/[\\()]/g,'\\$&');
+const wrap=(t,f,sz,w)=>{cv.font=(f==='B'?'bold ':'')+sz+'px '+(f==='C'?'Courier New,monospace':'Helvetica,Arial,sans-serif');const o=[];let ln='';t.split(' ').forEach(wd=>{const x=ln?ln+' '+wd:wd;if(cv.measureText(x).width>w&&ln){o.push(ln);ln=wd}else ln=x});o.push(ln);return o};
+const put=(t,f,sz,ind,gap)=>{wrap(t,f,sz,W-2*M-ind).forEach(l=>{if(y+sz>H-M){pages.push([]);y=M}pages[pages.length-1].push({t:l,f,sz,x:M+ind,y:H-y-sz});y+=sz*1.35});y+=gap||0};
+md.replace(/\r/g,'').split('\n').forEach(raw=>{if(/^```/.test(raw)){code=!code;y+=3;return}const t=clean(raw);let m;if(code){put(t||' ','C',9.5,8,0);return}
+if(m=t.match(/^(#{1,3})\s+(.*)/)){y+=m[1].length<2?6:3;put(m[2],'B',[0,21,16,13][m[1].length],0,4)}else if(m=t.match(/^\s*[-*]\s+(.*)/))put('- '+m[1],'N',11,12,1);else if(!t.trim())y+=6;else put(t,'N',11,0,2)});
+const fn={N:'/F1',B:'/F2',C:'/F3'},fo=n=>'<< /Type /Font /Subtype /Type1 /BaseFont /'+n+' /Encoding /WinAnsiEncoding >>',o=['<< /Type /Catalog /Pages 2 0 R >>',null,fo('Helvetica'),fo('Helvetica-Bold'),fo('Courier')],kids=[];
+pages.forEach((p,i)=>{const st=p.map(l=>'BT '+fn[l.f]+' '+l.sz+' Tf '+l.x.toFixed(1)+' '+l.y.toFixed(1)+' Td ('+pe(l.t)+') Tj ET').join('\n');o.push('<< /Length '+st.length+' >>\nstream\n'+st+'\nendstream');
+o.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents '+(6+2*i)+' 0 R >>');kids.push((7+2*i)+' 0 R')});
+o[1]='<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+pages.length+' >>';let out='%PDF-1.4\n';const xr=[];o.forEach((b,i)=>{xr.push(out.length);out+=(i+1)+' 0 obj\n'+b+'\nendobj\n'});
+const xo=out.length;out+='xref\n0 '+(o.length+1)+'\n0000000000 65535 f \n'+xr.map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')+'trailer\n<< /Size '+(o.length+1)+' /Root 1 0 R >>\nstartxref\n'+xo+'\n%%EOF';
+const u=new Uint8Array(out.length);for(let i=0;i<out.length;i++)u[i]=out.charCodeAt(i)&255;const h=md.match(/^#\s+(.+)/m);dl(((h?h[1]:'document').replace(/[^\w\- ]+/g,'').trim().slice(0,40)||'document')+'.pdf',new Blob([u],{type:'application/pdf'}))}
+async function mkVideo(b,code){const box=b.closest('.code');let o=box.querySelector('.out');if(!o){o=document.createElement('div');o.className='out';box.appendChild(o)}o.textContent='';let sp;
+try{sp=JSON.parse(code)}catch(e){o.textContent='Video script ka JSON theek nahi: '+e.message;return}
+const sc=(sp.scenes||[]).filter(x=>x&&x.text);if(!sc.length){o.textContent='Koi scene nahi mila.';return}
+if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){o.textContent='Is browser mein video recording nahi hai. Chrome use karo.';return}
+const V=sp.format==='9:16',W=V?720:1280,H=V?1280:720,cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
+const mt=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(t=>MediaRecorder.isTypeSupported(t))||'',rec=new MediaRecorder(cv.captureStream(30),mt?{mimeType:mt,videoBitsPerSecond:4e6}:{}),ch=[];rec.ondataavailable=e=>e.data.size&&ch.push(e.data);
+const dur=sc.map(x=>Math.max(2,Math.min(+x.sec||4,120))),tot=dur.reduce((a,c)=>a+c,0),st=performance.now();
+const lines=(t,w)=>{g.font='bold '+(V?54:60)+'px Helvetica,Arial,sans-serif';const r=[];let l='';String(t).split(/\s+/).forEach(wd=>{const x=l?l+' '+wd:wd;if(g.measureText(x).width>w&&l){r.push(l);l=wd}else l=x});r.push(l);return r};
+const draw=()=>{const t=(performance.now()-st)/1000;if(t>=tot){rec.stop();return}let i=0,a=0;while(i<sc.length-1&&t>=a+dur[i]){a+=dur[i];i++}const p=(t-a)/dur[i],c=String(sc[i].bg||'#7a0010,#e0102a').split(','),gr=g.createLinearGradient(0,0,W,H);
+gr.addColorStop(0,c[0].trim());gr.addColorStop(1,(c[1]||c[0]).trim());g.fillStyle=gr;g.fillRect(0,0,W,H);const k=Math.min(1,p*5);g.globalAlpha=Math.max(0,k*Math.min(1,(1-p)*5));g.fillStyle='#fff';g.textAlign='center';g.textBaseline='middle';
+const L=lines(sc[i].text,W*.82),lh=V?70:78,y0=H/2-(L.length-1)*lh/2+(1-k)*40;L.forEach((l,j)=>g.fillText(l,W/2,y0+j*lh));g.globalAlpha=1;g.fillStyle='rgba(255,255,255,.75)';g.fillRect(0,H-8,W*t/tot,8);o.textContent='Video ban rahi hai… '+Math.round(t/tot*100)+'% (is tab ko khula rakho)'};
+rec.onstop=()=>{const bl=new Blob(ch,{type:'video/webm'}),v=document.createElement('video'),d=document.createElement('button');v.src=URL.createObjectURL(bl);v.controls=true;v.style.cssText='width:100%;border-radius:8px;margin-bottom:8px';d.className='btn';d.textContent='⤓ Video download (.webm)';d.onclick=()=>dl((String(sp.title||'video').replace(/[^\w\- ]+/g,'').trim().slice(0,40)||'video')+'.webm',bl);o.textContent='';o.append(v,d)};
+rec.start();(function loop(){draw();if(rec.state==='recording')requestAnimationFrame(loop)})()}
+/*FILES_END*/
+async function runCode(b){const box=b.closest('.code'),l=(x=>x.includes('.')?x.split('.').pop():x)(box.querySelector('.ch span').textContent.toLowerCase()),code=box.querySelector('code').textContent;let o=box.querySelector('.out');if(!o){o=document.createElement('div');o.className='out';box.appendChild(o)}o.textContent='';
+if(l==='html'||l==='js'||l==='javascript'){const f=document.createElement('iframe');f.setAttribute('sandbox','allow-scripts');f.srcdoc=l==='html'?code:'<body style="font:13px monospace;margin:8px;color:#222"><pre id=o style="margin:0;white-space:pre-wrap"></pre><script>const o=document.getElementById("o"),w=(...a)=>{o.textContent+=a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" ")+"\\n"};console.log=w;console.error=w;onerror=m=>w("Error: "+m);try{'+code.replace(/<\/script/gi,'<\\/script')+'\n}catch(e){w("Error: "+e.message)}<\/script>';o.appendChild(f);return}
+o.textContent='Python load ho raha hai… (pehli dafa 10-20 second lagte hain)';
+try{if(!window.loadPyodide)await new Promise((ok,no)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';sc.onload=ok;sc.onerror=()=>no(Error('Python engine load nahi hua. Internet check karo.'));document.head.appendChild(sc)});
+window.__py=window.__py||await loadPyodide();let out='';__py.setStdout({batched:t=>out+=t+'\n'});__py.setStderr({batched:t=>out+=t+'\n'});
+const r=await __py.runPythonAsync(code);if(r!==undefined&&r!==null)out+=String(r);o.textContent=out||'(Koi output nahi)'}catch(e){o.textContent=String(e.message||e)}}
+const cap=t=>t.charAt(0).toUpperCase()+t.slice(1),MODEL_L={general:'General',coder:'Coder',tutor:'Coding Teacher',debug:'Debugger',reviewer:'Code Reviewer',architect:'Architect',teacher:'Teacher',writer:'Writer',business:'Business',linguist:'Language Teacher',translator:'Translator'};
+function pillUI(){const e=L.get('jv_eff')||'medium',m=L.get('jv_mode')||'general';$('pt').textContent=cap(e)+(m!=='general'?' · '+(MODEL_L[m]||m):'')}
+function closePop(){document.querySelectorAll('.pop').forEach(p=>p.classList.remove('show'))}
+function openPop(id,a){const p=$(id),was=p.classList.contains('show');closePop();if(was)return;p.classList.add('show');const r=$('f').getBoundingClientRect();p.style.bottom=(innerHeight-r.top+8)+'px';p.style.left=Math.max(10,Math.min(a.getBoundingClientRect().left,innerWidth-p.offsetWidth-10))+'px'}
+function item(i,t,f,sub,ck){const b=document.createElement('button');b.type='button';b.className='pi';b.innerHTML='<i></i><span></span>'+(ck?'<b class="ck">✓</b>':'');b.children[0].textContent=i;const sp=b.children[1];sp.textContent=t;if(sub){const x=document.createElement('small');x.textContent=sub;sp.appendChild(x)}b.onclick=()=>{closePop();f()};return b}
+const head=t=>{const d=document.createElement('div');d.className='ph';d.textContent=t;return d},fillIn=t=>()=>{$('p').value=t+' ';fit();$('p').focus();toast('Apni tafseel likho, phir send (↑) dabao')};
+const ct=(i,t,p,m)=>item(i,t,()=>{L.put('jv_mode',m);$('mode2').value=m;pillUI();fillIn(p)()});
+$('plus').onclick=()=>{const w=L.get('jv_web')==='1';$('popPlus').replaceChildren(item('📎','Photo / File upload',()=>$('file').click(),'Image, PDF ya text file'),item('🌐','Internet search',()=>{L.put('jv_web',w?'0':'1');toast('Internet search '+(w?'OFF':'ON (sirf Claude mein)'))},'Sirf Claude provider mein',w),head('Banao'),
+item('📄','PDF banao',fillIn('Mere liye ek professional PDF document banao. Topic:')),item('📦','Project ZIP',fillIn('Ek chhota complete website project alag alag files mein banao taake main ZIP download kar sakun. Website kis cheez ki hai:')),item('🎬','Video banao',fillIn('Ek 8-scene animated text video script banao jo main video ki tarah download kar sakun. Topic:')),
+head('Code tools'),ct('🐞','Debug karo','Is code ya error ko theek karo aur ghalti ki wajah batao:','debug'),ct('🔍','Code review','Is code ko review karo (bugs, security, speed) aur behtar version do:','reviewer'),ct('💡','Code samjhao','Is code ko line by line asaan Roman Urdu mein samjhao:','tutor'),ct('🔁','Language convert','Is code ko dusri language mein convert karo (target language bhi likho):','coder'),ct('🧪','Tests likho','Is code ke liye proper tests likho aur chalane ka tareeqa batao:','coder'),ct('⚡','Optimize karo','Is code ko tez aur saaf banao aur batao kya badla:','coder'),ct('🏗','Project plan','Mere project ka plan banao: tech stack, folder structure, database aur steps. Project:','architect'),head('Aur'),item('⤓','Chat export',()=>$('exp').click()),item('🌓','Theme badlo',()=>$('theme').click()),item('⚙','Settings',openSet));openPop('popPlus',$('plus'))};
+$('pill').onclick=()=>{const e=L.get('jv_eff')||'medium',m=L.get('jv_mode')||'general',r=[head('Effort')];
+[['low','⚡','Low','Sabse tez, chhota jawab'],['medium','◐','Medium','Balanced'],['high','●','High','Gehri soch, tafseel'],['extreme','🔥','Extreme','Sabse gehra aur lamba']].forEach(([v,i,t,x])=>r.push(item(i,t,()=>{L.put('jv_eff',v);effUI();chip()},x,e===v)));
+r.push(head('Mode'));Object.keys(MODEL_L).forEach(k=>r.push(item('✦',MODEL_L[k],()=>{L.put('jv_mode',k);$('mode2').value=k;pillUI()},'',m===k)));r.push(head('Model'),item('⚙',model()||'Puter AI',openSet,'Badalne ke liye tap karo'));$('popPill').replaceChildren(...r);openPop('popPill',$('pill'))};
+document.addEventListener('click',e=>{if(!e.target.closest('.pop,#plus,#pill,#more'))closePop()});
+(function(){const c=$('orb'),g=c.getContext('2d'),D=Math.min(devicePixelRatio||1,2),rnd=Math.random,PI=Math.PI;let S=360,t=0;
+function size(){S=Math.min(innerWidth,420,innerHeight*.46)|0;c.style.width=c.style.height=S+'px';c.width=c.height=S*D}size();addEventListener('resize',size);
+const SD=[],ID=[],RB=[],EM=[],NS=3200,COL=['rgba(140,0,35,.55)','rgba(210,10,55,.7)','rgba(255,40,85,.8)','rgba(255,85,140,.9)','rgba(255,150,190,.95)','rgba(255,225,238,1)'],SZ=[.7,.8,.95,1.1,1.25,1.5];
+for(let i=0;i<NS;i++){const y=1-2*(i+.5)/NS,r=Math.sqrt(1-y*y),a=i*2.399963,k=1+(rnd()-.5)*.03;SD.push([Math.cos(a)*r*k,y*k,Math.sin(a)*r*k,rnd()])}
+for(let i=0;i<450;i++){const u=rnd()*2-1,a=rnd()*6.283,r=Math.sqrt(1-u*u)*Math.cbrt(rnd())*.96;ID.push([Math.cos(a)*r,u*Math.cbrt(rnd())*.96,Math.sin(a)*r,rnd()])}
+for(let i=0;i<10;i++)RB.push({lon:rnd()*6.283,lat:(rnd()-.5)*1.5,span:2.2+rnd()*2.6,w:.2+rnd()*.26,ph:[rnd()*6.283,rnd()*6.283,rnd()*6.283],sp:.25+rnd()*.35});
+for(let i=0;i<120;i++)EM.push({a:rnd()*6.283,p:rnd(),s:.5+rnd()});
+const OR=[[1.28,.5,.2,.14],[1.12,1.1,-.4,-.1],[1.45,.2,.9,.07],[1.2,.9,.5,.2],[1.38,1.3,-.8,-.12],[1.5,.7,.1,.05]],SP=[];
+for(let i=0;i<72;i++)SP.push({a:i/72*6.283+rnd()*.05,l:1.18+rnd()*.32,d:rnd()<.5,p:rnd()});
+let vis=true;try{new IntersectionObserver(e=>{vis=e[0].isIntersecting}).observe(c)}catch(e){}
+(function f(){requestAnimationFrame(f);if(document.hidden||!vis)return;t+=.012;const W=S*D,cx=W/2,R=W*.31,B=[[],[],[],[],[],[]],yw=t*.22,pt=.45+.12*Math.sin(t*.31),cy=Math.cos(yw),sy=Math.sin(yw),cp=Math.cos(pt),sp=Math.sin(pt);g.clearRect(0,0,W,W);g.globalCompositeOperation='lighter';
+let gr=g.createRadialGradient(cx,cx,R*.75,cx,cx,R*1.45);gr.addColorStop(0,'rgba(100,0,30,.1)');gr.addColorStop(.35,'rgba(230,20,70,.3)');gr.addColorStop(1,'rgba(120,0,30,0)');g.fillStyle=gr;g.fillRect(0,0,W,W);
+g.strokeStyle='rgba(255,70,120,.3)';g.lineWidth=D*1.5;g.beginPath();g.arc(cx,cx,R,0,6.283);g.stroke();g.strokeStyle='rgba(255,40,90,.1)';g.lineWidth=D*6;g.stroke();
+g.save();g.translate(cx,cx);g.rotate(t*.05);g.lineWidth=D*.7;SP.forEach(q=>{const r0=R*1.08,r1=R*q.l,ca=Math.cos(q.a),sa=Math.sin(q.a);g.strokeStyle='rgba(255,60,70,'+(.1+.18*q.p).toFixed(2)+')';g.beginPath();g.moveTo(ca*r0,sa*r0);g.lineTo(ca*r1,sa*r1);g.stroke();if(q.d){g.fillStyle='rgba(255,140,140,.85)';for(let k=0;k<4;k++){const rr=r0+(r1-r0)*(.15+.2*k+((t*.5+q.p)%.2)*.5);g.fillRect(ca*rr-D,sa*rr-D,D*2,D*2)}}});g.restore();
+g.save();g.translate(cx,cx);g.rotate(-t*.12);g.lineWidth=D*3;g.setLineDash([D*2,D*3,D*6,D*3,D,D*5]);g.strokeStyle='rgba(255,60,70,.5)';g.beginPath();g.arc(0,0,R*1.34,0,5.2);g.stroke();g.setLineDash([D,D*4]);g.lineWidth=D*1.4;g.strokeStyle='rgba(255,130,130,.55)';g.beginPath();g.arc(0,0,R*1.42,.6,6.1);g.stroke();g.setLineDash([]);g.restore();
+const OP=(o,th)=>{const k=o[0],x=Math.cos(th)*R*k,y0=Math.sin(th)*R*k,y1=y0*Math.cos(o[1]),z1=y0*Math.sin(o[1]),a=o[2]+t*o[3],c=Math.cos(a),s2=Math.sin(a);return[cx+x*c-y1*s2,cx+x*s2+y1*c,(z1/(R*k)+1)/2]};
+OR.forEach((o,i)=>{g.lineWidth=D*.9;let pv=null;for(let a=0;a<=48;a++){const p=OP(o,a/48*6.2832);if(pv){g.strokeStyle='rgba(255,'+(50+p[2]*110|0)+','+(70+p[2]*80|0)+','+(.9*(.12+.7*p[2])).toFixed(3)+')';g.beginPath();g.moveTo(pv[0],pv[1]);g.lineTo(p[0],p[1]);g.stroke()}pv=p}
+const th=t*(1.1+i*.23)+i*1.7;if(i<3){g.lineWidth=D*(2.6-i*.6);g.strokeStyle='rgba(255,110,120,.85)';g.beginPath();for(let a=-6;a<=6;a++){const p=OP(o,th+a*.05);a<-5?g.moveTo(p[0],p[1]):g.lineTo(p[0],p[1])}g.stroke()}
+const p=OP(o,th);g.save();g.translate(p[0],p[1]);g.rotate(th);g.lineWidth=D*1.1;g.strokeStyle='rgba(255,150,160,.9)';g.beginPath();g.ellipse(0,0,D*5,D*2.2,0,0,6.283);g.stroke();g.restore()});
+const put=(x,y,z,al)=>{const x1=x*cy-z*sy,z1=x*sy+z*cy,y1=y*cp-z1*sp,z2=y*sp+z1*cp,a=al*(z2>0?1:.5);B[Math.min(5,Math.max(0,a*6|0))].push(cx+x1*R,cx+y1*R);return z2};
+SD.forEach(s=>{const x1=s[0]*cy-s[2]*sy,z1=s[0]*sy+s[2]*cy,z2=s[1]*sp+z1*cp;put(s[0],s[1],s[2],(.12+.55*Math.pow(1-Math.abs(z2),2.2))*(.6+.4*s[3]))});
+ID.forEach(s=>put(s[0],s[1],s[2],.1+.25*s[3]));
+RB.forEach(rb=>{for(let u=0;u<100;u++){const uu=u/99,env=Math.sin(PI*uu),lo0=rb.lon+uu*rb.span+.45*Math.sin(uu*5.3+rb.ph[0]+t*rb.sp*2),la0=rb.lat+.55*Math.sin(uu*3.1+rb.ph[1]+t*rb.sp*1.6),bri=.55+.45*Math.sin(uu*14+t*2+rb.ph[0]);
+for(let v=0;v<11;v++){const vv=v/10*2-1,la=la0+vv*rb.w*(.3+env)*(1+.5*Math.sin(uu*8+rb.ph[2]+t)),lo=lo0+.18*vv*Math.sin(uu*11+t*.9+rb.ph[2]),lf=1+.035*Math.sin(uu*9+vv*3+t*1.2+rb.ph[0])+.02*env,cl=Math.cos(la);
+put(Math.cos(lo)*cl*lf,Math.sin(la)*lf,Math.sin(lo)*cl*lf,(.34+.66*env*bri)*(Math.abs(vv)>.8?1.2:.85))}}});
+EM.forEach(e=>{const u=(t*.07*e.s+e.p)%1,r=R*(.95+.45*u),a=e.a+u*.5;B[3].push(cx+Math.cos(a)*r,cx+Math.sin(a)*r*.9-u*R*.1)});
+for(let b=0;b<6;b++){g.fillStyle=COL[b];const A=B[b],z=D*SZ[b];for(let i=0;i<A.length;i+=2)g.fillRect(A[i],A[i+1],z,z)}})()})();
+$('more').onclick=()=>{const p=$('popMore'),was=p.classList.contains('show'),r=[head('Jaldi shuru karo')];document.querySelectorAll('.card').forEach(b=>{const [ic,...w]=b.querySelector('b').textContent.split(' ');r.push(item(ic,w.join(' '),()=>b.click(),b.querySelector('span').textContent))});
+p.replaceChildren(...r);closePop();if(was)return;p.classList.add('show');const a=$('more').getBoundingClientRect();p.style.top=(a.bottom+8)+'px';p.style.bottom='auto';p.style.left='auto';p.style.right='10px'};
+function hudStatus(){const e=$('sys2');if(e)e.textContent=('MODEL '+(model()||'puter')+'  ·  EFFORT '+(L.get('jv_eff')||'medium')+'  ·  LANG '+(L.get('jv_lang')||'auto')).toUpperCase()}
+(function(){const c=$('orb'),h=$('orbh'),g=h.getContext('2d'),D=Math.min(devicePixelRatio||1,2),rnd=Math.random,PI=Math.PI;let S=360,H=470,t=0,vis=true;
+function size(){S=Math.min(innerWidth,420,innerHeight*.46)|0;H=Math.round(S*1.3);h.style.width=h.style.height=H+'px';h.style.left=h.style.top=(-(H-S)/2)+'px';h.width=h.height=H*D}size();addEventListener('resize',()=>setTimeout(size,80));
+try{new IntersectionObserver(e=>{vis=e[0].isIntersecting}).observe(c)}catch(e){}
+const unit=()=>{const z=rnd()*2-1,a=rnd()*6.283,r=Math.sqrt(1-z*z);return[Math.cos(a)*r,Math.sin(a)*r,z]},cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],nm=v=>{const l=Math.hypot(v[0],v[1],v[2])||1;return[v[0]/l,v[1]/l,v[2]/l]};
+const basis=()=>{const n=unit(),u=nm(cr(n,[.3,.7,.5])),v=nm(cr(n,u));return{u,v}};
+const OR=[],TR=[],SP=[];
+for(let i=0;i<8;i++){const b=basis();OR.push({u:b.u,v:b.v,r:1.12+i*.075+rnd()*.04,w:(rnd()<.5?-1:1)*(.15+rnd()*.35),a0:rnd()*6.283,arc:.8+rnd()*1.2,sats:[rnd()*6.283,rnd()*6.283]})}
+[[1.04,'rgba(255,85,105,.6)',.09],[1.34,'rgba(255,60,90,.5)',-.07],[1.62,'rgba(255,130,150,.45)',.05]].forEach(([r,col,w])=>{const b=basis(),tk=[];for(let i=0;i<190;i++)tk.push([rnd()*6.283,.015+Math.pow(rnd(),2)*.06]);TR.push({u:b.u,v:b.v,r,col,w,t:tk})});
+for(let i=0;i<56;i++){const rs=[];let r=1.08+rnd()*.12;const n=4+(rnd()*6|0);for(let k=0;k<n;k++){rs.push(r);r+=.06+rnd()*.07}SP.push({d:unit(),r:rs,e:rs[rs.length-1]})}
+(function f(){requestAnimationFrame(f);if(document.hidden||!vis)return;t+=.01;const W=H*D,cx=W/2,Rs=S*.38*D,yw=t*.12,pt=.95+.12*Math.sin(t*.23),cy=Math.cos(yw),sy=Math.sin(yw),cp=Math.cos(pt),sp=Math.sin(pt);
+const R=v=>{const x1=v[0]*cy-v[2]*sy,z1=v[0]*sy+v[2]*cy;return[x1,v[1]*cp-z1*sp,v[1]*sp+z1*cp]};g.clearRect(0,0,W,W);g.globalCompositeOperation='lighter';
+g.strokeStyle='rgba(255,60,80,.07)';g.lineWidth=D;g.beginPath();SP.forEach(s=>{const d=R(s.d);g.moveTo(cx+d[0]*Rs,cx+d[1]*Rs);g.lineTo(cx+d[0]*s.e*Rs,cx+d[1]*s.e*Rs)});g.stroke();
+g.fillStyle='rgba(255,100,120,1)';SP.forEach(s=>{const d=R(s.d);g.globalAlpha=d[2]>0?.6:.28;s.r.forEach(r=>g.fillRect(cx+d[0]*r*Rs,cx+d[1]*r*Rs,D*1.4,D*1.4))});g.globalAlpha=1;
+TR.forEach(ring=>{const u=R(ring.u),v=R(ring.v);g.strokeStyle=ring.col;g.lineWidth=D*1.1;g.beginPath();ring.t.forEach(tk=>{const a=tk[0]+t*ring.w,ca=Math.cos(a),sa=Math.sin(a),px=ca*u[0]+sa*v[0],py=ca*u[1]+sa*v[1];g.moveTo(cx+px*ring.r*Rs,cx+py*ring.r*Rs);g.lineTo(cx+px*(ring.r+tk[1])*Rs,cx+py*(ring.r+tk[1])*Rs)});g.stroke()});
+OR.forEach(o=>{const u=R(o.u),v=R(o.v),P=a=>{const ca=Math.cos(a),sa=Math.sin(a);return[ca*u[0]+sa*v[0],ca*u[1]+sa*v[1],ca*u[2]+sa*v[2]]};
+[[true,.5],[false,.16]].forEach(([fr,al])=>{g.strokeStyle='rgba(255,70,95,'+al+')';g.lineWidth=D;g.beginPath();let pen=false;for(let i=0;i<=96;i++){const p=P(i/96*6.283);if((p[2]>=0)===fr){const x=cx+p[0]*o.r*Rs,y=cx+p[1]*o.r*Rs;if(pen)g.lineTo(x,y);else{g.moveTo(x,y);pen=true}}else pen=false}g.stroke()});
+g.strokeStyle='rgba(255,130,155,.75)';g.lineWidth=D*1.5;g.beginPath();const a1=o.a0+t*o.w;for(let i=0;i<=24;i++){const p=P(a1+i/24*o.arc),x=cx+p[0]*o.r*Rs,y=cx+p[1]*o.r*Rs;i?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();
+o.sats.forEach((s0,k)=>{const a=s0+t*o.w*(k?-.6:1),p=P(a),q=P(a+.02),x=cx+p[0]*o.r*Rs,y=cx+p[1]*o.r*Rs;g.strokeStyle='rgba(255,200,215,'+(p[2]>0?.9:.4)+')';g.lineWidth=D;g.beginPath();g.ellipse(x,y,D*6,D*2.6,Math.atan2(q[1]-p[1],q[0]-p[0]),0,6.283);g.stroke();g.fillStyle='rgba(255,220,230,.9)';g.fillRect(x-D,y-D,D*2,D*2)})});
+})()})();
+function edit(i){const c=cur();if(!c||S.busy)return;$('p').value=c.msgs[i].text;c.msgs.length=i;save();render();fit();$('p').focus()}
+$('dn').onclick=()=>$('scroll').scrollTo({top:$('scroll').scrollHeight,behavior:'smooth'});
+function shrink(){const s=$('scroll'),h=$('hero'),p=Math.min(1,s.scrollTop/((h.offsetHeight||1)*.9));const k=1-.6*p;h.style.transform='scale('+k.toFixed(3)+')';h.style.opacity=(1-.5*p).toFixed(2);h.style.marginBottom=(-(1-k)*(h.offsetHeight||0)).toFixed(1)+'px'}
+$('scroll').onscroll=()=>{shrink();const e=$('scroll');$('dn').style.display=e.scrollHeight-e.scrollTop-e.clientHeight>300?'block':'none'};
+$('exp').onclick=()=>{const c=cur();if(!c||!c.msgs.length)return toast('Export ke liye chat khali hai.');const t='# '+c.title+'\n\n'+c.msgs.filter(m=>m.text).map(m=>'**'+(m.role==='user'?'You':'Lexi')+':**\n\n'+m.text).join('\n\n---\n\n');
+try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/markdown'}));a.download=(c.title.replace(/[^\w\- ]+/g,'').trim().slice(0,40)||'chat')+'.md';a.click()}catch(e){}
+navigator.clipboard.writeText(t).then(()=>toast('Chat export ho gayi aur copy bhi'),()=>toast('Chat export ho gayi'))};
+$('ca').onclick=()=>{if(S.busy||!confirm('Saari chats hamesha ke liye delete hongi. Pakka?'))return;S.chats=[];S.id=null;L.del('jv_chats');$('modal').classList.remove('show');newChat();side();toast('Saari chats delete ho gayin')};
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();if(!S.busy)newChat();$('p').focus()}if(e.key==='Escape'){$('modal').classList.remove('show');closeSide()}});
+addEventListener('offline',()=>toast('Internet band hai'));addEventListener('online',()=>toast('Internet wapas aa gaya'));
+const openSide=()=>{$('side').classList.add('open');$('shade').classList.add('show')},closeSide=()=>{$('side').classList.remove('open');$('shade').classList.remove('show')};
+$('menu').onclick=openSide;$('shade').onclick=closeSide;$('new').onclick=()=>{if(!S.busy)newChat()};$('q').oninput=side;
+function openSet(){$('key').value='';$('key').placeholder=key()?'Key saved ✓ (naya paste karke badal sakte ho)':'API key paste karo';$('prov').value=PROV();$('base').value=L.get('jv_base')||SRV()||'https://api.groq.com/openai/v1';provUI();$('tok').value=L.get('jv_tok2')||'0';$('temp').value=L.get('jv_temp')||'0.7';$('mode').value=L.get('jv_mode')||'general';$('lang').value=L.get('jv_lang')||'auto';fillVoices();$('me').value=L.get('jv_me')||'';$('web').checked=L.get('jv_web')==='1';$('modal').classList.add('show');closeSide();serverUI()}
+$('openSet').onclick=openSet;$('modal').onclick=e=>{if(e.target===$('modal'))$('modal').classList.remove('show')};
+$('sv').onclick=()=>{const p=$('prov').value,kn='jv_key_'+p,k=$('key').value.trim(),old=Ss.get(kn)||L.get(kn)||'';L.put('jv_prov',p);L.put('jv_base',$('base').value.trim());
+if(k){Ss.put(kn,k);$('rem').checked?L.put(kn,k):L.del(kn)}else if(!$('rem').checked)L.del(kn);else if(old)L.put(kn,old);
+L.put('jv_model_'+p,$('model').value.trim()||(p==='claude'?'claude-haiku-5-5':p==='puter'?'':'llama-3.3-70b-versatile'));L.put('jv_tok2',$('tok').value);L.put('jv_temp',$('temp').value);L.put('jv_mode',$('mode').value);L.put('jv_lang',$('lang').value);L.put('jv_voice',$('voice').value);$('mode2').value=$('mode').value;L.put('jv_me',$('me').value.trim());L.put('jv_web',$('web').checked?'1':'0');$('modal').classList.remove('show');chip();toast('Settings save ho gayin')};
+$('rk').onclick=()=>{const p=$('prov').value;Ss.del('jv_key_'+p);L.del('jv_key_'+p);L.del('jv_prov');L.del('jv_base');$('key').value='';$('key').placeholder='API key paste karo';chip();toast('Key hata di gayi')};
+$('lm').onclick=async()=>{if($('prov').value==='puter'){try{if(!window.puter)throw 0;const ls=await puter.ai.listModels(),n=(ls||[]).map(x=>x&&x.id||x).filter(x=>typeof x==='string').slice(0,300);$('ml').innerHTML=n.map(x=>'<option value="'+esc(x)+'">').join('');const ms=$('msel');ms.innerHTML='<option value="">(Puter ka default)</option>'+n.map(x=>'<option>'+esc(x)+'</option>').join('');ms.value=$('model').value;ms.hidden=false;toast(n.length+' models mile')}catch(e){toast('Models ki list nahi mili')}return}const p=$('prov').value,k=$('key').value.trim()||Ss.get('jv_key_'+p)||L.get('jv_key_'+p);if(!k)return toast('Pehle API key daalo.');$('lm').textContent='…';
+try{const u=p==='claude'?'https://api.anthropic.com/v1/models?limit=100':($('base').value.trim()||base()).replace(/\/+$/,'')+'/models',h=p==='claude'?{'x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}:{Authorization:'Bearer '+k};
+const r=await fetch(u,{headers:h}),d=await r.json();if(!r.ok)throw Error((d.error&&(d.error.message||JSON.stringify(d.error)))||'fail');const n=(d.data||[]).map(x=>x.id).filter(x=>x&&!NC.test(x));if(p!=='claude')n.sort((a,b)=>rank(a)-rank(b));if(!n.length)throw Error('Koi chat model nahi mila');$('ml').innerHTML=n.map(x=>'<option value="'+esc(x)+'">').join('');
+const ms=$('msel');ms.innerHTML=n.map(x=>'<option>'+esc(x)+'</option>').join('');if(!n.includes($('model').value.trim()))$('model').value=n[0];ms.value=$('model').value;ms.hidden=false;toast(n.length+' models mile — list se chuno, phir Save dabao')}catch(e){toast('Models load nahi hue: '+e.message)}$('lm').textContent='Models load karo'};
+function theme(t){document.documentElement.dataset.theme=t;$('theme').textContent=t==='dark'?'☾':'☀';document.querySelector('meta[name=theme-color]').content=t==='dark'?'#050203':'#fff4f4';L.put('jv_theme',t)}
+$('theme').onclick=()=>theme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+theme(L.get('jv_theme')||'dark');
+try{S.chats=JSON.parse(L.get('jv_chats')||'[]')}catch(e){S.chats=[]}
+S.chats=S.chats.filter(c=>c&&Array.isArray(c.msgs)).map(c=>(c.msgs=c.msgs.filter(m=>m.text||m.err),c)).filter(c=>c.msgs.length);
+S.chats.sort((a,b)=>b.t-a.t);S.id=null;newChat();side();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}if(!key())setTimeout(openSet,400);
+})();
+</script>
+</body>
+</html>
